@@ -117,8 +117,8 @@ def make_target(reports_dir: Path) -> Path:
         reports_dir
         / "IC-251"
         / "plugins"
-        / "software.barad1tos.applescript.toolkit"
-        / "2.0.5"
+        / "software.barad1tos.puppet-tools"
+        / "0.3.0"
     )
     target.mkdir(parents=True)
     (target / "verification-verdict.txt").write_text("Compatible\n", encoding="utf-8")

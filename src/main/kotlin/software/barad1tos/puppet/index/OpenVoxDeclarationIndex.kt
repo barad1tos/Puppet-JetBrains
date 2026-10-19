@@ -2,9 +2,9 @@ package software.barad1tos.puppet.index
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.psi.util.CachedValuesManager
 import com.intellij.psi.util.CachedValueProvider
+import com.intellij.psi.util.CachedValuesManager
+import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.FileContent
@@ -16,7 +16,10 @@ import software.barad1tos.puppet.OpenVoxFileType
 import software.barad1tos.puppet.psi.OpenVoxNamedElement
 import software.barad1tos.puppet.psi.OpenVoxTypes as T
 
-enum class OpenVoxDeclarationKind(val prefix: String, val presentableName: String) {
+enum class OpenVoxDeclarationKind(
+    val prefix: String,
+    val presentableName: String,
+) {
     CLASS("class", "class"),
     DEFINE("define", "defined type"),
     FUNCTION("function", "function"),
@@ -26,20 +29,20 @@ enum class OpenVoxDeclarationKind(val prefix: String, val presentableName: Strin
     ;
 
     companion object {
-        fun of(element: PsiElement): OpenVoxDeclarationKind? = when (element.node?.elementType) {
-            T.CLASS_DEFINITION -> CLASS
-            T.DEFINE_DEFINITION -> DEFINE
-            T.FUNCTION_DEFINITION -> FUNCTION
-            T.TYPE_ALIAS -> TYPE_ALIAS
-            T.PLAN_DEFINITION -> PLAN
-            T.NODE_DEFINITION -> NODE
-            else -> null
-        }
+        fun of(element: PsiElement): OpenVoxDeclarationKind? =
+            when (element.node?.elementType) {
+                T.CLASS_DEFINITION -> CLASS
+                T.DEFINE_DEFINITION -> DEFINE
+                T.FUNCTION_DEFINITION -> FUNCTION
+                T.TYPE_ALIAS -> TYPE_ALIAS
+                T.PLAN_DEFINITION -> PLAN
+                T.NODE_DEFINITION -> NODE
+                else -> null
+            }
     }
 }
 
 class OpenVoxDeclarationIndex : ScalarIndexExtension<String>() {
-
     override fun getName(): ID<String, Void> = KEY
 
     override fun getVersion(): Int = 2
@@ -51,25 +54,31 @@ class OpenVoxDeclarationIndex : ScalarIndexExtension<String>() {
     override fun getInputFilter(): FileBasedIndex.InputFilter =
         FileBasedIndex.InputFilter { it.fileType == OpenVoxFileType }
 
-    override fun getIndexer(): DataIndexer<String, Void, FileContent> = DataIndexer { content ->
-        val file = content.psiFile
-        declarationsIn(file).mapNotNull { declaration ->
-            val kind = OpenVoxDeclarationKind.of(declaration) ?: return@mapNotNull null
-            val name = declaration.name ?: return@mapNotNull null
-            keyFor(kind, name)
-        }.associateWith { null }
-    }
+    override fun getIndexer(): DataIndexer<String, Void, FileContent> =
+        DataIndexer { content ->
+            val file = content.psiFile
+            declarationsIn(file)
+                .mapNotNull { declaration ->
+                    val kind = OpenVoxDeclarationKind.of(declaration) ?: return@mapNotNull null
+                    val name = declaration.name ?: return@mapNotNull null
+                    keyFor(kind, name)
+                }.associateWith { null }
+        }
 
     companion object {
-        val KEY: ID<String, Void> = ID.create("software.barad1tos.puppet-tools.declarations")
+        const val INDEX_NAME = "software.barad1tos.puppet-tools.declarations"
+        val KEY: ID<String, Void> = ID.create(INDEX_NAME)
 
-        fun keyFor(kind: OpenVoxDeclarationKind, name: String): String =
-            "${kind.prefix}:${name.removePrefix("::").lowercase()}"
+        fun keyFor(
+            kind: OpenVoxDeclarationKind,
+            name: String,
+        ): String = "${kind.prefix}:${name.removePrefix("::").lowercase()}"
 
         fun declarationsIn(file: PsiFile): List<OpenVoxNamedElement> =
             CachedValuesManager.getCachedValue(file) {
                 CachedValueProvider.Result.create(
-                    PsiTreeUtil.findChildrenOfType(file, OpenVoxNamedElement::class.java)
+                    PsiTreeUtil
+                        .findChildrenOfType(file, OpenVoxNamedElement::class.java)
                         .filter { OpenVoxDeclarationKind.of(it) != null },
                     file,
                 )

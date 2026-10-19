@@ -1,14 +1,12 @@
 package software.barad1tos.puppet
 
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import software.barad1tos.puppet.inspections.OpenVoxLegacyFactInspection
 import software.barad1tos.puppet.inspections.OpenVoxUnknownAttributeInspection
 import software.barad1tos.puppet.inspections.OpenVoxUnknownFunctionInspection
 import software.barad1tos.puppet.inspections.OpenVoxUnresolvedVariableInspection
 import software.barad1tos.puppet.inspections.OpenVoxUnusedParameterInspection
 
-class OpenVoxInspectionTest : BasePlatformTestCase() {
-
+class OpenVoxInspectionTest : PuppetPlatformTestCase() {
     fun testUnknownFunctionIsReported() {
         myFixture.enableInspections(OpenVoxUnknownFunctionInspection())
         myFixture.configureByText(
@@ -64,7 +62,9 @@ class OpenVoxInspectionTest : BasePlatformTestCase() {
         myFixture.enableInspections(OpenVoxUnknownAttributeInspection())
         myFixture.configureByText(
             "site.pp",
-            "apache::vhost { 'x':\n  <warning descr=\"'apache::vhost' has no attribute 'porrt'\">porrt</warning> => 80,\n}\n",
+            "apache::vhost { 'x':\n" +
+                "  <warning descr=\"'apache::vhost' has no attribute 'porrt'\">porrt</warning> => 80,\n" +
+                "}\n",
         )
         myFixture.checkHighlighting()
     }
@@ -73,7 +73,10 @@ class OpenVoxInspectionTest : BasePlatformTestCase() {
         myFixture.enableInspections(OpenVoxUnresolvedVariableInspection())
         myFixture.configureByText(
             "site.pp",
-            "class demo {\n  notify { 'x': message => <warning descr=\"Variable '\$missing' is not declared in this scope\">\$missing</warning> }\n}\n",
+            "class demo {\n" +
+                "  notify { 'x': message => <warning descr=\"Variable " +
+                "'\$missing' is not declared in this scope\">\$missing</warning> }\n" +
+                "}\n",
         )
         myFixture.checkHighlighting()
     }
@@ -82,7 +85,10 @@ class OpenVoxInspectionTest : BasePlatformTestCase() {
         myFixture.enableInspections(OpenVoxUnresolvedVariableInspection())
         myFixture.configureByText(
             "site.pp",
-            "class demo (String \$greeting = 'hi') {\n  \$local = \$apache::port\n  notify { 'x': message => \"\$greeting \$local \${facts['os']['family']} \$title\" }\n}\n",
+            "class demo (String \$greeting = 'hi') {\n" +
+                "  \$local = \$apache::port\n" +
+                "  notify { 'x': message => \"\$greeting \$local \${facts['os']['family']} \$title\" }\n" +
+                "}\n",
         )
         myFixture.checkHighlighting()
     }
@@ -100,7 +106,10 @@ class OpenVoxInspectionTest : BasePlatformTestCase() {
         myFixture.enableInspections(OpenVoxUnusedParameterInspection())
         myFixture.configureByText(
             "site.pp",
-            "define demo (Integer <warning descr=\"Parameter '\$unused' is never used\">\$unused</warning>, String \$used) {\n  notify { \$used: }\n}\n",
+            "define demo (Integer <warning descr=\"Parameter " +
+                "'\$unused' is never used\">\$unused</warning>, String \$used) {\n" +
+                "  notify { \$used: }\n" +
+                "}\n",
         )
         myFixture.checkHighlighting()
     }

@@ -9,7 +9,6 @@ import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
 
 class OpenVoxRubyFunctionIndex : ScalarIndexExtension<String>() {
-
     override fun getName(): ID<String, Void> = KEY
 
     override fun getVersion(): Int = 1
@@ -18,29 +17,38 @@ class OpenVoxRubyFunctionIndex : ScalarIndexExtension<String>() {
 
     override fun getKeyDescriptor(): KeyDescriptor<String> = EnumeratorStringDescriptor.INSTANCE
 
-    override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter { file ->
-        file.extension == "rb" && ("/puppet/functions/" in file.path || "/puppet/parser/functions/" in file.path)
-    }
+    override fun getInputFilter(): FileBasedIndex.InputFilter =
+        FileBasedIndex.InputFilter { file ->
+            file.extension == "rb" && ("/puppet/functions/" in file.path || "/puppet/parser/functions/" in file.path)
+        }
 
-    override fun getIndexer(): DataIndexer<String, Void, FileContent> = DataIndexer { content ->
-        val text = content.contentAsText
-        val names = mutableSetOf<String>()
-        MODERN.findAll(text).forEach { names += it.groupValues[1].lowercase() }
-        LEGACY.findAll(text).forEach { names += it.groupValues[1].lowercase() }
-        names.associateWith { null }
-    }
+    override fun getIndexer(): DataIndexer<String, Void, FileContent> =
+        DataIndexer { content ->
+            val text = content.contentAsText
+            val names = mutableSetOf<String>()
+            MODERN.findAll(text).forEach { names += it.groupValues[1].lowercase() }
+            LEGACY.findAll(text).forEach { names += it.groupValues[1].lowercase() }
+            names.associateWith { null }
+        }
 
     companion object {
-        val KEY: ID<String, Void> = ID.create("software.barad1tos.puppet-tools.rubyFunctions")
+        const val INDEX_NAME = "software.barad1tos.puppet-tools.rubyFunctions"
+        val KEY: ID<String, Void> = ID.create(INDEX_NAME)
 
         private val MODERN = Regex("""create_function\(\s*:'?([\w:]+)'?""")
         private val LEGACY = Regex("""newfunction\(\s*:(\w+)""")
 
-        fun exists(project: com.intellij.openapi.project.Project, name: String): Boolean =
-            FileBasedIndex.getInstance().getContainingFiles(
-                KEY,
-                name.removePrefix("::").lowercase(),
-                com.intellij.psi.search.GlobalSearchScope.allScope(project),
-            ).isNotEmpty()
+        fun exists(
+            project: com.intellij.openapi.project.Project,
+            name: String,
+        ): Boolean =
+            FileBasedIndex
+                .getInstance()
+                .getContainingFiles(
+                    KEY,
+                    name.removePrefix("::").lowercase(),
+                    com.intellij.psi.search.GlobalSearchScope
+                        .allScope(project),
+                ).isNotEmpty()
     }
 }

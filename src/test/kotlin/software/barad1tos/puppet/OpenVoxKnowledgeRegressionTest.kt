@@ -1,10 +1,9 @@
 package software.barad1tos.puppet
 
-import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import software.barad1tos.puppet.inspections.OpenVoxUnknownAttributeInspection
 import software.barad1tos.puppet.knowledge.OpenVoxKnowledge
 
-class OpenVoxKnowledgeRegressionTest : BasePlatformTestCase() {
+class OpenVoxKnowledgeRegressionTest : PuppetPlatformTestCase() {
     fun testRegsubstDefaultsToSharedSignatureAndDocumentsOpenvox8Overload() {
         val function = OpenVoxKnowledge.functions.getValue("regsubst")
         assertFalse(function.presentableSignature().contains("\$encoding"))
@@ -13,12 +12,24 @@ class OpenVoxKnowledgeRegressionTest : BasePlatformTestCase() {
     }
 
     fun testFileContentDocumentsVersionSpecificChecksumBehavior() {
-        assertTrue(OpenVoxKnowledge.attribute("file", "content")!!.doc.contains("OpenVox 9 writes checksum-looking strings literally"))
+        assertTrue(
+            OpenVoxKnowledge
+                .attribute(
+                    "file",
+                    "content",
+                )!!
+                .doc
+                .contains("OpenVox 9 writes checksum-looking strings literally"),
+        )
     }
 
     fun testStandardExecGuardsAreAccepted() {
         myFixture.enableInspections(OpenVoxUnknownAttributeInspection())
-        myFixture.configureByText("site.pp", "exec { '/bin/true': creates => '/tmp/done', onlyif => '/bin/true', unless => '/bin/false', refreshonly => true }")
+        myFixture.configureByText(
+            "site.pp",
+            "exec { '/bin/true': creates => '/tmp/done', onlyif => '/bin/true', " +
+                "unless => '/bin/false', refreshonly => true }",
+        )
         myFixture.checkHighlighting()
     }
 
@@ -39,7 +50,6 @@ class OpenVoxKnowledgeRegressionTest : BasePlatformTestCase() {
         myFixture.completeBasic()
         assertContainsElements(myFixture.lookupElementStrings.orEmpty(), "os", "networking", "memory")
     }
-
 
     fun testNestedFactCompletionOffersImmediateKeys() {
         myFixture.configureByText("site.pp", "\$x = \$facts['os']['<caret>']")

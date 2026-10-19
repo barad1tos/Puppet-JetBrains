@@ -9,18 +9,27 @@ import com.intellij.util.io.EnumeratorStringDescriptor
 
 class OpenVoxHieraIndex : ScalarIndexExtension<String>() {
     override fun getName(): ID<String, Void> = KEY
+
     override fun getVersion(): Int = 1
+
     override fun dependsOnFileContent(): Boolean = true
+
     override fun getKeyDescriptor() = EnumeratorStringDescriptor.INSTANCE
+
     override fun getInputFilter() = FileBasedIndex.InputFilter { it.extension == "yaml" || it.extension == "yml" }
-    override fun getIndexer(): DataIndexer<String, Void, FileContent> = DataIndexer { content ->
-        KEYS.findAll(content.contentAsText).map { match ->
-            match.groupValues.drop(1).first { it.isNotEmpty() }
-        }.associateWith { null }
-    }
+
+    override fun getIndexer(): DataIndexer<String, Void, FileContent> =
+        DataIndexer { content ->
+            KEYS
+                .findAll(content.contentAsText)
+                .map { match ->
+                    match.groupValues.drop(1).first { it.isNotEmpty() }
+                }.associateWith { null }
+        }
 
     companion object {
-        val KEY: ID<String, Void> = ID.create("software.barad1tos.puppet-tools.hiera")
+        const val INDEX_NAME = "software.barad1tos.puppet-tools.hiera"
+        val KEY: ID<String, Void> = ID.create(INDEX_NAME)
         private const val NAME = "[a-z][\\w]*(?:::[a-zA-Z_][\\w]*)+"
         private val KEYS = Regex("(?m)^[ \\t]*(?:($NAME)|\"($NAME)\"|'($NAME)'):[ \\t]*(?:[^\\r\\n]*)$")
     }
