@@ -86,6 +86,7 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
                 }
                 """.trimIndent(),
             )
-        assertOffers(items, "\$greeting", "\$target")
+        // Both names already occur in the fixture, so only the lookup itself can prove they were offered.
+        assertContainsElements(items, "\$greeting", "\$target")
     }
 }
