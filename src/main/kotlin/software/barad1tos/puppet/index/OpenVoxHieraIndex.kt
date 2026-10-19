@@ -40,7 +40,7 @@ private val HIERA_KEY_PATTERN =
     )
 
 /** A `|` or `>` block scalar header in value position, with optional chomping, indentation and comment. */
-private val BLOCK_SCALAR_START = Regex("""(?::|^[ \t]*-|[ \t]-)[ \t]+[|>][1-9+-]{0,2}[ \t]*(?:#.*)?$""")
+private val BLOCK_SCALAR_START = Regex("""(?::[ \t]+|^[ \t]*(?:-[ \t]+)+)[|>][1-9+-]{0,2}[ \t]*(?:#.*)?$""")
 
 /**
  * Namespaced mapping keys in a Hiera data file. Lines inside a block scalar are text, not keys:

@@ -24,6 +24,16 @@ class HieraKeysTest : TestCase() {
         assertEquals(setOf("a::cmd", "b::c"), hieraKeys(text))
     }
 
+    fun testDashBeforePipeInPlainValueIsNotABlockScalar() {
+        val text = "a::sep: foo - |\n  b::c: 1\n"
+        assertEquals(setOf("a::sep", "b::c"), hieraKeys(text))
+    }
+
+    fun testSkipsBlockScalarInNestedSequence() {
+        val text = "a::matrix:\n  - - |\n      x::y: z\nb::c: 1\n"
+        assertEquals(setOf("a::matrix", "b::c"), hieraKeys(text))
+    }
+
     fun testHandlesWindowsLineEnds() {
         assertEquals(setOf("a::b", "c::d"), hieraKeys("a::b: |\r\n  x::y: z\r\nc::d: 1\r\n"))
     }
