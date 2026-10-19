@@ -30,8 +30,8 @@ Other deployment changes include Ruby 3.2 minimum, opt-in report processing (`re
 
 ## Validation and release policy
 
-The IDE does not infer an OpenVox version or reject version-specific function arity. Configure the appropriate executable under **Settings → Tools → OpenVox / Puppet** for external syntax validation. Compile and test catalogs with each target runtime to check function arguments, module dependencies and runtime behavior; `parser validate` alone does not cover those checks.
+The IDE does not infer an OpenVox version or reject version-specific function arity. Configure the appropriate executable under **Settings → Tools → Puppet** for external syntax validation. Compile and test catalogs with each target runtime to check function arguments, module dependencies and runtime behavior; `parser validate` alone does not cover those checks.
 
 Before updating the supported 9 prerelease or declaring stable support, compare the parser and generated inventory again, run the plugin tests and corpus checks, and update this record. Keep 8 as the generated-data baseline so 8-only signatures remain documented.
 
-GitHub Actions runs build and compatibility checks only. Build and verify locally, then upload `build/distributions/*.zip` to JetBrains Marketplace manually. There is no release or publishing workflow.
+GitHub Actions builds, tests and verifies every change, and the release workflow publishes a tagged `v*` build as a GitHub Release; publishing to JetBrains Marketplace runs from the same workflow once a Marketplace token is configured.
