@@ -7,6 +7,11 @@ on:
 permissions:
   contents: read
 
+# One release at a time, never cancelled: a cancelled run could leave a tag half-released.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   verify:
     name: Verify plugin
@@ -37,6 +42,28 @@ jobs:
           plugin_version="$(sed -n 's/^pluginVersion *= *//p' gradle.properties | tr -d '[:space:]')"
           if [[ "v${plugin_version}" != "$TAG_NAME" ]]; then
             echo "::error::Tag ${TAG_NAME} does not match pluginVersion ${plugin_version} in gradle.properties"
+            exit 1
+          fi
+
+      - name: Verify tag is newer than the latest release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          latest="$(gh release list --exclude-drafts --limit 1 --json tagName --jq '.[0].tagName // empty')"
+          if [[ -z "$latest" ]]; then
+            echo "No published release yet; ${TAG_NAME} is the first."
+            exit 0
+          fi
+          if [[ "$latest" == "$TAG_NAME" ]]; then
+            echo "::error::A release for ${TAG_NAME} already exists"
+            exit 1
+          fi
+          newest="$(printf '%s\n%s\n' "${latest#v}" "${TAG_NAME#v}" | sort -V | tail -n1)"
+          if [[ "$newest" != "${TAG_NAME#v}" ]]; then
+            echo "::error::Tag ${TAG_NAME} is not newer than the latest release ${latest}"
             exit 1
           fi
 
@@ -75,8 +102,8 @@ jobs:
       - name: Verify release helper scripts
         run: python3 scripts/tests/test_verify_plugin_verifier.py
 
-      - name: Fail on unapproved verifier API findings
-        run: python3 scripts/verify-plugin-verifier.py --fail-on-api-warnings
+      - name: Fail on internal API findings
+        run: python3 scripts/verify-plugin-verifier.py
 
   publish:
     name: Publish
@@ -133,22 +160,33 @@ jobs:
             echo "SIGN_PLUGIN=true" >> "$GITHUB_ENV"
           fi
 
-      - name: Build, optionally sign and publish
+      - name: Build and optionally sign
         shell: bash
         env:
-          PUBLISH_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
           CERTIFICATE_CHAIN: ${{ secrets.CERTIFICATE_CHAIN }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
         run: |
           tasks=(buildPlugin)
           [[ "$SIGN_PLUGIN" == "true" ]] && tasks+=(signPlugin)
-          [[ "$PUBLISH_PLUGIN" == "true" ]] && tasks+=(publishPlugin)
           ./gradlew "${tasks[@]}" --stacktrace
 
+      # The GitHub Release comes first and is idempotent (a rerun updates the existing release), so a
+      # failure here never leaves a Marketplace version without its asset, and a rerun after a
+      # Marketplace failure never submits the same version twice.
       - name: Create GitHub Release
         uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v2
         with:
           files: build/distributions/*.zip
           generate_release_notes: true
           draft: false
+
+      - name: Publish to JetBrains Marketplace
+        if: env.PUBLISH_PLUGIN == 'true'
+        shell: bash
+        env:
+          PUBLISH_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+          CERTIFICATE_CHAIN: ${{ secrets.CERTIFICATE_CHAIN }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
+        run: ./gradlew publishPlugin --stacktrace
