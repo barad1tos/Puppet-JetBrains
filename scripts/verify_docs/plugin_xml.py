@@ -28,8 +28,11 @@ class PluginXmlMetadata:
 def load_plugin_xml_metadata() -> PluginXmlMetadata:
     # The parsed file is this repository's own plugin.xml, a trusted input.
     # nosemgrep: python.lang.security.use-defused-xml-parse.use-defused-xml-parse -- trusted repo file
-    root = ET.parse(PLUGIN_XML).getroot()
-    # <product-descriptor> exists only for paid plugins; a free plugin has no release-date/version.
+    try:
+        root = ET.parse(PLUGIN_XML).getroot()
+    except ET.ParseError as error:
+        raise ValueError(f"plugin.xml is not well-formed XML: {error}") from error
+    # <product-descriptor> exists only for paid or freemium plugins; a free plugin has no release-date/version.
     product_descriptor = root.find("product-descriptor")
 
     change_notes = root.findtext("change-notes") or ""
