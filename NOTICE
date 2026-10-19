@@ -1,3 +1,26 @@
+Puppet Tools
+Copyright 2026 Roman Borodavkin and contributors
+
+Current maintained fork:
+This product is maintained by Roman Borodavkin and contributors as a fork of
+the OpenVox Language plugin for IntelliJ Platform IDEs, published under a new
+plugin identity with its own release pipeline.
+
+Original OpenVox Language plugin:
+This product includes software derived from the OpenVox Language plugin for
+IntelliJ Platform IDEs:
+
+  https://github.com/blendbyte/openvox-intellij
+
+Copyright 2026 Blendbyte GmbH
+Licensed under the Apache License, Version 2.0.
+
+The original project's NOTICE is preserved below. This maintained fork's notice
+above covers this repository's derivative work and modifications; it does not
+replace or narrow the original attribution.
+
+----------------------------------------------------------------------------
+
 OpenVox Language plugin for IntelliJ Platform IDEs
 Copyright 2026 Blendbyte GmbH
 
@@ -26,6 +49,10 @@ The distributed plugin archive contains only code from this repository. No
 third-party binaries are bundled; the IntelliJ Platform, Kotlin standard library
 and test libraries are compile- or test-scope only.
 
+----------------------------------------------------------------------------
+
 Puppet is a trademark of Perforce Software, Inc. OpenVox is a project of
-Vox Pupuli. This plugin is an independent, community-maintained project and is
-not affiliated with, endorsed by or sponsored by either.
+Vox Pupuli. JetBrains, IntelliJ IDEA and related names or marks are trademarks
+of their respective owners. This plugin is an independent, community-maintained
+project and is not affiliated with, endorsed by or sponsored by Perforce,
+Vox Pupuli, JetBrains or Blendbyte GmbH.
