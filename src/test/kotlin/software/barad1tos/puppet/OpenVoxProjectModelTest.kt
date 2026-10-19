@@ -4,7 +4,6 @@ import com.intellij.psi.PsiFile
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 class OpenVoxProjectModelTest : BasePlatformTestCase() {
-
     fun testEppArgumentResolvesToTemplate() {
         myFixture.addFileToProject("profile/templates/nginx.conf.epp", "server { }\n")
         myFixture.configureByText("site.pp", "\$c = epp('profile/ngi<caret>nx.conf.epp')")
@@ -45,12 +44,26 @@ class OpenVoxProjectModelTest : BasePlatformTestCase() {
         assertTrue(myFixture.findAllGutters().any { it.tooltipText?.contains("profile::agent::ensure") == true })
     }
 
+    fun testHieraIndexFindsKeysWithBlockValues() {
+        myFixture.addFileToProject("data/common.yaml", "profile::agent::ensure:\n  - running\n")
+        myFixture.configureByText("init.pp", "class profile::agent (String \$ensure = 'running') { }")
+        assertTrue(myFixture.findAllGutters().any { it.tooltipText?.contains("profile::agent::ensure") == true })
+    }
+
+    fun testHieraIndexIgnoresColonWithoutBlank() {
+        myFixture.addFileToProject("data/common.yaml", "profile::agent::ensure:running\n")
+        myFixture.configureByText("init.pp", "class profile::agent (String \$ensure = 'running') { }")
+        assertTrue(myFixture.findAllGutters().isEmpty())
+    }
+
     fun testHieraIndexTracksEditedKeys() {
         val data = myFixture.addFileToProject("data/common.yaml", "profile::agent::ensure: running\n")
         myFixture.configureByText("init.pp", "class profile::agent (String \$ensure = 'running') { }")
         assertFalse(myFixture.findAllGutters().isEmpty())
         com.intellij.openapi.command.WriteCommandAction.runWriteCommandAction(project) {
-            val manager = com.intellij.psi.PsiDocumentManager.getInstance(project)
+            val manager =
+                com.intellij.psi.PsiDocumentManager
+                    .getInstance(project)
             manager.getDocument(data)!!.setText("profile::other::ensure: running\n")
             manager.commitAllDocuments()
         }
