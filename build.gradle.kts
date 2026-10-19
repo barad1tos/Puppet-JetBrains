@@ -68,14 +68,14 @@ val generatedSrc = layout.buildDirectory.dir("generated/sources/grammar")
 val generateOpenVoxParser by tasks.registering(GenerateParserTask::class) {
     sourceFile = file("src/main/grammar/OpenVox.bnf")
     targetRootOutputDir = generatedSrc.map { it.asFile }
-    pathToParser = "net/blendbyte/openvox/parser/OpenVoxParser.java"
-    pathToPsiRoot = "net/blendbyte/openvox/psi"
+    pathToParser = "software/barad1tos/puppet/parser/OpenVoxParser.java"
+    pathToPsiRoot = "software/barad1tos/puppet/psi"
     purgeOldFiles = true
 }
 
 val generateOpenVoxLexer by tasks.registering(GenerateLexerTask::class) {
     sourceFile = file("src/main/grammar/OpenVox.flex")
-    targetOutputDir = generatedSrc.map { it.dir("net/blendbyte/openvox/lexer").asFile }
+    targetOutputDir = generatedSrc.map { it.dir("software/barad1tos/puppet/lexer").asFile }
     skeleton = file("src/main/grammar/idea-flex.skeleton")
     purgeOldFiles = true
     dependsOn(generateOpenVoxParser)

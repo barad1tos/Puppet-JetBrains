@@ -36,86 +36,86 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="OpenVox" language="OpenVox" extensions="pp"
-                  implementationClass="net.blendbyte.openvox.OpenVoxFileType" fieldName="INSTANCE"/>
+                  implementationClass="software.barad1tos.puppet.OpenVoxFileType" fieldName="INSTANCE"/>
         <fileType name="EPP" language="EPP" extensions="epp"
-                  implementationClass="net.blendbyte.openvox.EppFileType" fieldName="INSTANCE"/>
+                  implementationClass="software.barad1tos.puppet.EppFileType" fieldName="INSTANCE"/>
 
         <lang.parserDefinition language="OpenVox"
-                               implementationClass="net.blendbyte.openvox.parser.OpenVoxParserDefinition"/>
+                               implementationClass="software.barad1tos.puppet.parser.OpenVoxParserDefinition"/>
         <lang.parserDefinition language="EPP"
-                               implementationClass="net.blendbyte.openvox.parser.EppParserDefinition"/>
+                               implementationClass="software.barad1tos.puppet.parser.EppParserDefinition"/>
 
         <lang.syntaxHighlighterFactory language="OpenVox"
-                                       implementationClass="net.blendbyte.openvox.highlighting.OpenVoxSyntaxHighlighterFactory"/>
+                                       implementationClass="software.barad1tos.puppet.highlighting.OpenVoxSyntaxHighlighterFactory"/>
         <lang.syntaxHighlighterFactory language="EPP"
-                                       implementationClass="net.blendbyte.openvox.highlighting.EppSyntaxHighlighterFactory"/>
+                                       implementationClass="software.barad1tos.puppet.highlighting.EppSyntaxHighlighterFactory"/>
 
-        <lang.commenter language="OpenVox" implementationClass="net.blendbyte.openvox.OpenVoxCommenter"/>
-        <lang.braceMatcher language="OpenVox" implementationClass="net.blendbyte.openvox.OpenVoxBraceMatcher"/>
+        <lang.commenter language="OpenVox" implementationClass="software.barad1tos.puppet.OpenVoxCommenter"/>
+        <lang.braceMatcher language="OpenVox" implementationClass="software.barad1tos.puppet.OpenVoxBraceMatcher"/>
 
-        <colorSettingsPage implementation="net.blendbyte.openvox.highlighting.OpenVoxColorSettingsPage"/>
-        <lang.foldingBuilder language="OpenVox" implementationClass="net.blendbyte.openvox.editor.OpenVoxFoldingBuilder"/>
-        <lang.foldingBuilder language="EPP" implementationClass="net.blendbyte.openvox.editor.OpenVoxFoldingBuilder"/>
-        <lang.quoteHandler language="OpenVox" implementationClass="net.blendbyte.openvox.editor.OpenVoxQuoteHandler"/>
+        <colorSettingsPage implementation="software.barad1tos.puppet.highlighting.OpenVoxColorSettingsPage"/>
+        <lang.foldingBuilder language="OpenVox" implementationClass="software.barad1tos.puppet.editor.OpenVoxFoldingBuilder"/>
+        <lang.foldingBuilder language="EPP" implementationClass="software.barad1tos.puppet.editor.OpenVoxFoldingBuilder"/>
+        <lang.quoteHandler language="OpenVox" implementationClass="software.barad1tos.puppet.editor.OpenVoxQuoteHandler"/>
         <lang.psiStructureViewFactory language="OpenVox"
-                                      implementationClass="net.blendbyte.openvox.structure.OpenVoxStructureViewFactory"/>
+                                      implementationClass="software.barad1tos.puppet.structure.OpenVoxStructureViewFactory"/>
         <liveTemplateContext contextId="OpenVox"
-                             implementation="net.blendbyte.openvox.editor.OpenVoxLiveTemplateContext"/>
+                             implementation="software.barad1tos.puppet.editor.OpenVoxLiveTemplateContext"/>
         <defaultLiveTemplates file="/liveTemplates/OpenVox.xml"/>
-        <fileBasedIndex implementation="net.blendbyte.openvox.index.OpenVoxDeclarationIndex"/>
-        <fileBasedIndex implementation="net.blendbyte.openvox.index.OpenVoxHieraIndex"/>
-        <fileBasedIndex implementation="net.blendbyte.openvox.index.OpenVoxRubyFunctionIndex"/>
+        <fileBasedIndex implementation="software.barad1tos.puppet.index.OpenVoxDeclarationIndex"/>
+        <fileBasedIndex implementation="software.barad1tos.puppet.index.OpenVoxHieraIndex"/>
+        <fileBasedIndex implementation="software.barad1tos.puppet.index.OpenVoxRubyFunctionIndex"/>
         <psi.referenceContributor language="OpenVox"
-                                  implementation="net.blendbyte.openvox.resolve.OpenVoxReferenceContributor"/>
+                                  implementation="software.barad1tos.puppet.resolve.OpenVoxReferenceContributor"/>
         <psi.referenceContributor language="EPP"
-                                  implementation="net.blendbyte.openvox.resolve.OpenVoxReferenceContributor"/>
+                                  implementation="software.barad1tos.puppet.resolve.OpenVoxReferenceContributor"/>
         <lang.findUsagesProvider language="OpenVox"
-                                 implementationClass="net.blendbyte.openvox.resolve.OpenVoxFindUsagesProvider"/>
-        <referencesSearch implementation="net.blendbyte.openvox.resolve.OpenVoxReferenceSearcher"/>
-        <gotoClassContributor implementation="net.blendbyte.openvox.resolve.OpenVoxGotoClassContributor"/>
-        <gotoSymbolContributor implementation="net.blendbyte.openvox.resolve.OpenVoxGotoSymbolContributor"/>
+                                 implementationClass="software.barad1tos.puppet.resolve.OpenVoxFindUsagesProvider"/>
+        <referencesSearch implementation="software.barad1tos.puppet.resolve.OpenVoxReferenceSearcher"/>
+        <gotoClassContributor implementation="software.barad1tos.puppet.resolve.OpenVoxGotoClassContributor"/>
+        <gotoSymbolContributor implementation="software.barad1tos.puppet.resolve.OpenVoxGotoSymbolContributor"/>
         <completion.contributor language="OpenVox"
-                                implementationClass="net.blendbyte.openvox.completion.OpenVoxCompletionContributor"/>
+                                implementationClass="software.barad1tos.puppet.completion.OpenVoxCompletionContributor"/>
         <completion.contributor language="EPP"
-                                implementationClass="net.blendbyte.openvox.completion.OpenVoxCompletionContributor"/>
+                                implementationClass="software.barad1tos.puppet.completion.OpenVoxCompletionContributor"/>
         <lang.documentationProvider language="OpenVox"
-                                    implementationClass="net.blendbyte.openvox.completion.OpenVoxDocumentationProvider"/>
+                                    implementationClass="software.barad1tos.puppet.completion.OpenVoxDocumentationProvider"/>
         <lang.documentationProvider language="EPP"
-                                    implementationClass="net.blendbyte.openvox.completion.OpenVoxDocumentationProvider"/>
+                                    implementationClass="software.barad1tos.puppet.completion.OpenVoxDocumentationProvider"/>
         <psi.referenceContributor language="OpenVox"
-                                  implementation="net.blendbyte.openvox.project.OpenVoxProjectReferenceContributor"/>
+                                  implementation="software.barad1tos.puppet.project.OpenVoxProjectReferenceContributor"/>
         <codeInsight.lineMarkerProvider language="OpenVox"
-                                        implementationClass="net.blendbyte.openvox.project.OpenVoxHieraLineMarkerProvider"/>
+                                        implementationClass="software.barad1tos.puppet.project.OpenVoxHieraLineMarkerProvider"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnknownFunction"
                          displayName="Unknown function" groupName="OpenVox"
                          enabledByDefault="true" level="WARNING"
-                         implementationClass="net.blendbyte.openvox.inspections.OpenVoxUnknownFunctionInspection"/>
+                         implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnknownFunctionInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnknownAttribute"
                          displayName="Unknown resource attribute" groupName="OpenVox"
                          enabledByDefault="true" level="WARNING"
-                         implementationClass="net.blendbyte.openvox.inspections.OpenVoxUnknownAttributeInspection"/>
+                         implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnknownAttributeInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnresolvedVariable"
                          displayName="Unresolved variable" groupName="OpenVox"
                          enabledByDefault="true" level="WARNING"
-                         implementationClass="net.blendbyte.openvox.inspections.OpenVoxUnresolvedVariableInspection"/>
+                         implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnresolvedVariableInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxLegacyFact"
                          displayName="Legacy top-scope fact" groupName="OpenVox"
                          enabledByDefault="true" level="WEAK WARNING"
-                         implementationClass="net.blendbyte.openvox.inspections.OpenVoxLegacyFactInspection"/>
+                         implementationClass="software.barad1tos.puppet.inspections.OpenVoxLegacyFactInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnusedParameter"
                          displayName="Unused parameter" groupName="OpenVox"
                          enabledByDefault="true" level="WARNING"
-                         implementationClass="net.blendbyte.openvox.inspections.OpenVoxUnusedParameterInspection"/>
+                         implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnusedParameterInspection"/>
 
         <externalAnnotator language="OpenVox"
-                           implementationClass="net.blendbyte.openvox.annotator.OpenVoxExternalAnnotator"/>
-        <applicationConfigurable parentId="tools" instance="net.blendbyte.openvox.settings.OpenVoxConfigurable"
-                                 id="net.blendbyte.openvox.settings" displayName="OpenVox / Puppet"/>
+                           implementationClass="software.barad1tos.puppet.annotator.OpenVoxExternalAnnotator"/>
+        <applicationConfigurable parentId="tools" instance="software.barad1tos.puppet.settings.OpenVoxConfigurable"
+                                 id="software.barad1tos.puppet.settings" displayName="OpenVox / Puppet"/>
         <lang.formatter language="OpenVox"
-                        implementationClass="net.blendbyte.openvox.formatting.OpenVoxFormattingModelBuilder"/>
+                        implementationClass="software.barad1tos.puppet.formatting.OpenVoxFormattingModelBuilder"/>
         <codeStyleSettingsProvider
-            implementation="net.blendbyte.openvox.formatting.OpenVoxCodeStyleSettingsProvider"/>
+            implementation="software.barad1tos.puppet.formatting.OpenVoxCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider
-            implementation="net.blendbyte.openvox.formatting.OpenVoxLanguageCodeStyleSettingsProvider"/>
+            implementation="software.barad1tos.puppet.formatting.OpenVoxLanguageCodeStyleSettingsProvider"/>
     </extensions>
 </idea-plugin>

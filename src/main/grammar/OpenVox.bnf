@@ -1,16 +1,16 @@
 {
-  parserClass="net.blendbyte.openvox.parser.OpenVoxParser"
-  parserUtilClass="net.blendbyte.openvox.parser.OpenVoxParserUtil"
+  parserClass="software.barad1tos.puppet.parser.OpenVoxParser"
+  parserUtilClass="software.barad1tos.puppet.parser.OpenVoxParserUtil"
 
-  extends="net.blendbyte.openvox.psi.impl.OpenVoxPsiElement"
+  extends="software.barad1tos.puppet.psi.impl.OpenVoxPsiElement"
   psiClassPrefix="OpenVox"
   psiImplClassSuffix="Impl"
-  psiPackage="net.blendbyte.openvox.psi"
-  psiImplPackage="net.blendbyte.openvox.psi.impl"
+  psiPackage="software.barad1tos.puppet.psi"
+  psiImplPackage="software.barad1tos.puppet.psi.impl"
 
-  elementTypeHolderClass="net.blendbyte.openvox.psi.OpenVoxTypes"
-  elementTypeClass="net.blendbyte.openvox.psi.OpenVoxElementType"
-  tokenTypeClass="net.blendbyte.openvox.psi.OpenVoxTokenType"
+  elementTypeHolderClass="software.barad1tos.puppet.psi.OpenVoxTypes"
+  elementTypeClass="software.barad1tos.puppet.psi.OpenVoxElementType"
+  tokenTypeClass="software.barad1tos.puppet.psi.OpenVoxTokenType"
 
   extends(".*_expr|.*_expression|.*_literal|dq_string|heredoc|type_reference|word_ref|epp_render")=expr
 
@@ -74,16 +74,16 @@ bare_function_call ::= <<statementFunctionName>> expr (COMMA expr)* SEMIC? { pin
 
 class_definition ::= CLASS !LBRACE qualified_name parameter_list? inherits_clause? block {
   pin=3
-  mixin="net.blendbyte.openvox.psi.impl.OpenVoxNamedElementImpl"
-  implements="net.blendbyte.openvox.psi.OpenVoxNamedElement"
+  mixin="software.barad1tos.puppet.psi.impl.OpenVoxNamedElementImpl"
+  implements="software.barad1tos.puppet.psi.OpenVoxNamedElement"
 }
 
 inherits_clause ::= INHERITS qualified_name { pin=1 }
 
 define_definition ::= DEFINE qualified_name parameter_list? block {
   pin=1
-  mixin="net.blendbyte.openvox.psi.impl.OpenVoxNamedElementImpl"
-  implements="net.blendbyte.openvox.psi.OpenVoxNamedElement"
+  mixin="software.barad1tos.puppet.psi.impl.OpenVoxNamedElementImpl"
+  implements="software.barad1tos.puppet.psi.OpenVoxNamedElement"
 }
 
 node_definition ::= NODE node_matcher (COMMA node_matcher)* block { pin=1 }
@@ -91,16 +91,16 @@ private node_matcher ::= DEFAULT | REGEX | qualified_name | SQ_STRING | dq_strin
 
 function_definition ::= FUNCTION qualified_name parameter_list? return_type? block {
   pin=1
-  mixin="net.blendbyte.openvox.psi.impl.OpenVoxNamedElementImpl"
-  implements="net.blendbyte.openvox.psi.OpenVoxNamedElement"
+  mixin="software.barad1tos.puppet.psi.impl.OpenVoxNamedElementImpl"
+  implements="software.barad1tos.puppet.psi.OpenVoxNamedElement"
 }
 
 return_type ::= RSHIFT data_type { pin=1 }
 
 type_alias ::= TYPE data_type EQUALS expr {
   pin=3
-  mixin="net.blendbyte.openvox.psi.impl.OpenVoxNamedElementImpl"
-  implements="net.blendbyte.openvox.psi.OpenVoxNamedElement"
+  mixin="software.barad1tos.puppet.psi.impl.OpenVoxNamedElementImpl"
+  implements="software.barad1tos.puppet.psi.OpenVoxNamedElement"
 }
 
 plan_definition ::= PLAN qualified_name parameter_list? block { pin=1 }
@@ -110,8 +110,8 @@ block ::= LBRACE statement * RBRACE { pin=1 }
 parameter_list ::= (LPAREN | WSLPAREN) (parameter (COMMA parameter)* COMMA?)? RPAREN { pin=1 }
 
 parameter ::= data_type? TIMES? VARIABLE (EQUALS expr)? {
-  mixin="net.blendbyte.openvox.psi.impl.OpenVoxNamedElementImpl"
-  implements="net.blendbyte.openvox.psi.OpenVoxNamedElement"
+  mixin="software.barad1tos.puppet.psi.impl.OpenVoxNamedElementImpl"
+  implements="software.barad1tos.puppet.psi.OpenVoxNamedElement"
 }
 
 data_type ::= type_reference data_type_parameters?
@@ -137,8 +137,8 @@ expr ::= relationship_expr
 relationship_expr ::= expr (IN_EDGE | IN_EDGE_SUB | OUT_EDGE | OUT_EDGE_SUB) expr
 assign_expr ::= expr (EQUALS | APPENDS | DELETES) expr {
   rightAssociative=true
-  mixin="net.blendbyte.openvox.psi.impl.OpenVoxNamedElementImpl"
-  implements="net.blendbyte.openvox.psi.OpenVoxNamedElement"
+  mixin="software.barad1tos.puppet.psi.impl.OpenVoxNamedElementImpl"
+  implements="software.barad1tos.puppet.psi.OpenVoxNamedElement"
 }
 or_expr ::= expr OR expr
 and_expr ::= expr AND expr
@@ -221,10 +221,10 @@ interpolation ::= INTERP_START (expr | keyword_as_name)? INTERP_END { pin=1 }
 heredoc ::= HD_TAG (expr (COMMA expr)*)? RPAREN { pin=1 }
 
 variable_expr ::= VARIABLE {
-  mixin="net.blendbyte.openvox.psi.impl.OpenVoxVariableMixin"
+  mixin="software.barad1tos.puppet.psi.impl.OpenVoxVariableMixin"
 }
 
-type_reference ::= CLASSREF { mixin="net.blendbyte.openvox.psi.impl.OpenVoxTypeReferenceMixin" }
+type_reference ::= CLASSREF { mixin="software.barad1tos.puppet.psi.impl.OpenVoxTypeReferenceMixin" }
 
 word_ref ::= BARE_WORD | IDENTIFIER
 
