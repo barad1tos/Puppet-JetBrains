@@ -47,7 +47,7 @@ git clone --depth 1 --branch 8.x https://github.com/OpenVoxProject/openvox.git /
 python3 tools/generate-openvox-data.py /tmp/openvox
 ```
 
-Keep OpenVox 8 as the generated-data baseline so 8-only signatures stay documented; see [docs/compatibility.md](docs/compatibility.md).
+Keep OpenVox 8 as the generated-data baseline so 8-only signatures stay documented; see [COMPATIBILITY.md](COMPATIBILITY.md).
 
 ## Submitting Changes
 
