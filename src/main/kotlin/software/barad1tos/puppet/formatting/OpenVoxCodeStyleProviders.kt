@@ -17,14 +17,14 @@ class OpenVoxCodeStyleSettingsProvider : CodeStyleSettingsProvider() {
     override fun createCustomSettings(settings: CodeStyleSettings): CustomCodeStyleSettings =
         OpenVoxCodeStyleSettings(settings)
 
-    override fun getConfigurableDisplayName(): String = "OpenVox / Puppet"
+    override fun getConfigurableDisplayName(): String = "Puppet"
 
     override fun getLanguage(): Language = OpenVoxLanguage
 
     override fun createConfigurable(
         settings: CodeStyleSettings,
         modelSettings: CodeStyleSettings,
-    ): CodeStyleConfigurable = object : CodeStyleAbstractConfigurable(settings, modelSettings, "OpenVox / Puppet") {
+    ): CodeStyleConfigurable = object : CodeStyleAbstractConfigurable(settings, modelSettings, "Puppet") {
         override fun createPanel(settings: CodeStyleSettings): CodeStyleAbstractPanel =
             object : TabbedLanguageCodeStylePanel(OpenVoxLanguage, currentSettings, settings) {}
 
@@ -43,7 +43,7 @@ class OpenVoxLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
                     OpenVoxCodeStyleSettings::class.java,
                     "SPACE_WITHIN_HASH_BRACES",
                     "Within hash braces",
-                    "OpenVox",
+                    "Puppet",
                 )
             }
             SettingsType.WRAPPING_AND_BRACES_SETTINGS -> {
@@ -51,19 +51,19 @@ class OpenVoxLanguageCodeStyleSettingsProvider : LanguageCodeStyleSettingsProvid
                     OpenVoxCodeStyleSettings::class.java,
                     "ALIGN_RESOURCE_ARROWS",
                     "Align attribute arrows in a resource body",
-                    "OpenVox",
+                    "Puppet",
                 )
                 consumer.showCustomOption(
                     OpenVoxCodeStyleSettings::class.java,
                     "ALIGN_HASH_ARROWS",
                     "Align arrows in a hash literal",
-                    "OpenVox",
+                    "Puppet",
                 )
                 consumer.showCustomOption(
                     OpenVoxCodeStyleSettings::class.java,
                     "ALIGN_SELECTOR_ARROWS",
                     "Align arrows in a selector",
-                    "OpenVox",
+                    "Puppet",
                 )
             }
             else -> Unit

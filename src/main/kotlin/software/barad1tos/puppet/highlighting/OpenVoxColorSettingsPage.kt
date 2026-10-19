@@ -11,7 +11,7 @@ class OpenVoxColorSettingsPage : ColorSettingsPage {
     override fun getAdditionalHighlightingTagToDescriptorMap() = null
     override fun getAttributeDescriptors() = DESCRIPTORS
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
-    override fun getDisplayName() = "OpenVox / Puppet"
+    override fun getDisplayName() = "Puppet"
 
     override fun getDemoText() = """
         # Manage the OpenVox agent itself.

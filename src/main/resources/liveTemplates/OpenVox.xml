@@ -1,4 +1,4 @@
-<templateSet group="OpenVox">
+<templateSet group="Puppet">
   <template name="class" value="class $NAME$ (&#10;) {&#10;  $END$&#10;}"
             description="Parameterised class" toReformat="true" toShortenFQNames="false">
     <variable name="NAME" expression="" defaultValue="&quot;profile::&quot;" alwaysStopAt="true"/>

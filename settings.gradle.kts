@@ -1,6 +1,6 @@
 import org.jetbrains.intellij.platform.gradle.extensions.intellijPlatform
 
-rootProject.name = "openvox-intellij"
+rootProject.name = "puppet-tools"
 
 pluginManagement {
     plugins {

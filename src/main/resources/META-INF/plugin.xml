@@ -1,12 +1,13 @@
 <idea-plugin>
     <depends>com.intellij.modules.platform</depends>
+    <!-- The original OpenVox Language plugin registers the same language and file types. -->
     <incompatible-with>net.blendbyte.openvox</incompatible-with>
+    <incompatible-with>net.blendbyte.openvox-intellij</incompatible-with>
 
     <description><![CDATA[
-      <p>Language tools for <b>OpenVox</b> and Puppet manifests (<code>.pp</code>), with
-      completion, navigation, refactoring, and EPP template editing (<code>.epp</code>).
-      Supports OpenVox 8 and
-      OpenVox 9 prereleases (checked against 9.0.0-rc1).</p>
+      <p>Language tools for <b>Puppet</b> and <b>OpenVox</b> manifests (<code>.pp</code>) and EPP
+      templates (<code>.epp</code>): completion, navigation, refactoring, formatting and inspections.
+      Supports Puppet 8, OpenVox 8 and OpenVox 9 prereleases.</p>
       <ul>
         <li><b>Editing</b> - syntax highlighting with a configurable colour scheme, brace
             matching, folding, live templates and a structure view.</li>
@@ -25,13 +26,15 @@
             unused parameter, and legacy top-scope facts with a quick fix that rewrites them
             as <code>$facts[...]</code>.</li>
         <li><b>External validation</b> - optional <code>puppet parser validate</code> and
-            <code>puppet-lint</code> integration.</li>
+            <code>puppet-lint</code> integration, configurable under Settings | Tools | Puppet.</li>
         <li>Modern language constructs throughout: parameterised data types such as
             <code>Optional[Variant[String[1], Enum['a','b']]]</code>, <code>Sensitive</code>,
             <code>Init</code>, type aliases, Puppet-language functions, lambdas, heredocs and
             EPP tags.</li>
       </ul>
-      <p>This plugin is community-maintained and is not affiliated with Perforce or Vox Pupuli.</p>
+      <p>Puppet Tools is an independent, community-maintained fork of the Apache-2.0 licensed
+      OpenVox Language plugin by Blendbyte GmbH. It is not affiliated with, endorsed by or
+      sponsored by Perforce Software (Puppet), Vox Pupuli (OpenVox) or Blendbyte GmbH.</p>
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -87,30 +90,30 @@
         <codeInsight.lineMarkerProvider language="OpenVox"
                                         implementationClass="software.barad1tos.puppet.project.OpenVoxHieraLineMarkerProvider"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnknownFunction"
-                         displayName="Unknown function" groupName="OpenVox"
+                         displayName="Unknown function" groupName="Puppet"
                          enabledByDefault="true" level="WARNING"
                          implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnknownFunctionInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnknownAttribute"
-                         displayName="Unknown resource attribute" groupName="OpenVox"
+                         displayName="Unknown resource attribute" groupName="Puppet"
                          enabledByDefault="true" level="WARNING"
                          implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnknownAttributeInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnresolvedVariable"
-                         displayName="Unresolved variable" groupName="OpenVox"
+                         displayName="Unresolved variable" groupName="Puppet"
                          enabledByDefault="true" level="WARNING"
                          implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnresolvedVariableInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxLegacyFact"
-                         displayName="Legacy top-scope fact" groupName="OpenVox"
+                         displayName="Legacy top-scope fact" groupName="Puppet"
                          enabledByDefault="true" level="WEAK WARNING"
                          implementationClass="software.barad1tos.puppet.inspections.OpenVoxLegacyFactInspection"/>
         <localInspection language="OpenVox" shortName="OpenVoxUnusedParameter"
-                         displayName="Unused parameter" groupName="OpenVox"
+                         displayName="Unused parameter" groupName="Puppet"
                          enabledByDefault="true" level="WARNING"
                          implementationClass="software.barad1tos.puppet.inspections.OpenVoxUnusedParameterInspection"/>
 
         <externalAnnotator language="OpenVox"
                            implementationClass="software.barad1tos.puppet.annotator.OpenVoxExternalAnnotator"/>
         <applicationConfigurable parentId="tools" instance="software.barad1tos.puppet.settings.OpenVoxConfigurable"
-                                 id="software.barad1tos.puppet.settings" displayName="OpenVox / Puppet"/>
+                                 id="software.barad1tos.puppet.settings" displayName="Puppet"/>
         <lang.formatter language="OpenVox"
                         implementationClass="software.barad1tos.puppet.formatting.OpenVoxFormattingModelBuilder"/>
         <codeStyleSettingsProvider
