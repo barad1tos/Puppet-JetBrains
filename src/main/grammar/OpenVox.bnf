@@ -6,7 +6,7 @@
   psiClassPrefix="OpenVox"
   psiImplClassSuffix="Impl"
   psiPackage="software.barad1tos.puppet.psi"
-  psiImplPackage="software.barad1tos.puppet.psi.impl"
+  psiImplPackage="software.barad1tos.puppet.psi.impl.generated"
 
   elementTypeHolderClass="software.barad1tos.puppet.psi.OpenVoxTypes"
   elementTypeClass="software.barad1tos.puppet.psi.OpenVoxElementType"
