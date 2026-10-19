@@ -9,7 +9,7 @@ import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
 
 class OpenVoxRubyFunctionIndex : ScalarIndexExtension<String>() {
-    override fun getName(): ID<String, Void> = KEY
+    override fun getName(): ID<String, Void> = RUBY_FUNCTION_INDEX_KEY
 
     override fun getVersion(): Int = 1
 
@@ -26,29 +26,17 @@ class OpenVoxRubyFunctionIndex : ScalarIndexExtension<String>() {
         DataIndexer { content ->
             val text = content.contentAsText
             val names = mutableSetOf<String>()
-            MODERN.findAll(text).forEach { names += it.groupValues[1].lowercase() }
-            LEGACY.findAll(text).forEach { names += it.groupValues[1].lowercase() }
+            MODERN_FUNCTION.findAll(text).forEach { names += it.groupValues[1].lowercase() }
+            LEGACY_FUNCTION.findAll(text).forEach { names += it.groupValues[1].lowercase() }
             names.associateWith { null }
         }
 
     companion object {
         const val INDEX_NAME = "software.barad1tos.puppet-tools.rubyFunctions"
-        val KEY: ID<String, Void> = ID.create(INDEX_NAME)
-
-        private val MODERN = Regex("""create_function\(\s*:'?([\w:]+)'?""")
-        private val LEGACY = Regex("""newfunction\(\s*:(\w+)""")
-
-        fun exists(
-            project: com.intellij.openapi.project.Project,
-            name: String,
-        ): Boolean =
-            FileBasedIndex
-                .getInstance()
-                .getContainingFiles(
-                    KEY,
-                    name.removePrefix("::").lowercase(),
-                    com.intellij.psi.search.GlobalSearchScope
-                        .allScope(project),
-                ).isNotEmpty()
     }
 }
+
+val RUBY_FUNCTION_INDEX_KEY: ID<String, Void> = ID.create(OpenVoxRubyFunctionIndex.INDEX_NAME)
+
+private val MODERN_FUNCTION = Regex("""create_function\(\s*:'?([\w:]+)'?""")
+private val LEGACY_FUNCTION = Regex("""newfunction\(\s*:(\w+)""")

@@ -21,30 +21,39 @@ import software.barad1tos.puppet.psi.OpenVoxTypes
 
 class OpenVoxParserDefinition : ParserDefinition {
     override fun createLexer(project: Project?) = OpenVoxLexerAdapter()
-    override fun createParser(project: Project?): PsiParser = OpenVoxParser()
-    override fun getFileNodeType() = FILE
-    override fun getCommentTokens(): TokenSet = OpenVoxTokenSets.PARSER_SKIPPED
-    override fun getStringLiteralElements(): TokenSet = OpenVoxTokenSets.STRINGS
-    override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
-    override fun createElement(node: ASTNode): PsiElement = OpenVoxTypes.Factory.createElement(node)
-    override fun createFile(viewProvider: FileViewProvider): PsiFile = OpenVoxFile(viewProvider)
 
-    companion object {
-        val FILE = IFileElementType(OpenVoxLanguage)
-    }
+    override fun createParser(project: Project?): PsiParser = OpenVoxParser()
+
+    override fun getFileNodeType(): IFileElementType = OPENVOX_FILE
+
+    override fun getCommentTokens(): TokenSet = OpenVoxTokenSets.PARSER_SKIPPED
+
+    override fun getStringLiteralElements(): TokenSet = OpenVoxTokenSets.STRINGS
+
+    override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
+
+    override fun createElement(node: ASTNode): PsiElement = OpenVoxTypes.Factory.createElement(node)
+
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = OpenVoxFile(viewProvider)
 }
 
 class EppParserDefinition : ParserDefinition {
     override fun createLexer(project: Project?) = EppLexerAdapter()
-    override fun createParser(project: Project?): PsiParser = EppPsiParser()
-    override fun getFileNodeType() = FILE
-    override fun getCommentTokens(): TokenSet = OpenVoxTokenSets.PARSER_SKIPPED
-    override fun getStringLiteralElements(): TokenSet = OpenVoxTokenSets.STRINGS
-    override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
-    override fun createElement(node: ASTNode): PsiElement = OpenVoxTypes.Factory.createElement(node)
-    override fun createFile(viewProvider: FileViewProvider): PsiFile = EppFile(viewProvider)
 
-    companion object {
-        val FILE = IFileElementType(EppLanguage)
-    }
+    override fun createParser(project: Project?): PsiParser = EppPsiParser()
+
+    override fun getFileNodeType(): IFileElementType = EPP_FILE
+
+    override fun getCommentTokens(): TokenSet = OpenVoxTokenSets.PARSER_SKIPPED
+
+    override fun getStringLiteralElements(): TokenSet = OpenVoxTokenSets.STRINGS
+
+    override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
+
+    override fun createElement(node: ASTNode): PsiElement = OpenVoxTypes.Factory.createElement(node)
+
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = EppFile(viewProvider)
 }
+
+private val OPENVOX_FILE = IFileElementType(OpenVoxLanguage)
+private val EPP_FILE = IFileElementType(EppLanguage)

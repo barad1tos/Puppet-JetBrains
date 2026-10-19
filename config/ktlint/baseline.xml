@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <baseline version="1.0">
-    <file name="src/main/kotlin/software/barad1tos/puppet/OpenVoxBraceMatcher.kt">
-        <error line="11" column="5" source="standard:blank-line-before-declaration" />
-        <error line="11" column="50" source="standard:function-signature" />
-        <error line="11" column="76" source="standard:function-signature" />
-        <error line="11" column="95" source="standard:function-signature" />
-        <error line="12" column="5" source="standard:blank-line-before-declaration" />
-        <error line="12" column="40" source="standard:function-signature" />
-        <error line="12" column="56" source="standard:function-signature" />
-        <error line="12" column="79" source="standard:function-signature" />
-        <error line="15" column="21" source="standard:multiline-expression-wrapping" />
-    </file>
     <file name="src/main/kotlin/software/barad1tos/puppet/OpenVoxCommenter.kt">
         <error line="7" column="5" source="standard:blank-line-before-declaration" />
         <error line="8" column="5" source="standard:blank-line-before-declaration" />
@@ -287,19 +276,6 @@
         <error line="79" column="26" source="standard:chain-method-continuation" />
         <error line="80" column="23" source="standard:chain-method-continuation" />
     </file>
-    <file name="src/main/kotlin/software/barad1tos/puppet/highlighting/OpenVoxColorSettingsPage.kt">
-        <error line="10" column="5" source="standard:blank-line-before-declaration" />
-        <error line="11" column="5" source="standard:blank-line-before-declaration" />
-        <error line="12" column="5" source="standard:blank-line-before-declaration" />
-        <error line="13" column="5" source="standard:blank-line-before-declaration" />
-        <error line="14" column="5" source="standard:blank-line-before-declaration" />
-        <error line="16" column="34" source="standard:multiline-expression-wrapping" />
-        <error line="16" column="34" source="standard:function-signature" />
-        <error line="16" column="34" source="standard:string-template-indent" />
-        <error line="39" column="1" source="standard:indent" />
-        <error line="39" column="5" source="standard:string-template-indent" />
-        <error line="42" column="27" source="standard:multiline-expression-wrapping" />
-    </file>
     <file name="src/main/kotlin/software/barad1tos/puppet/highlighting/OpenVoxSyntaxHighlighter.kt">
         <error line="3" column="1" source="standard:import-ordering" />
         <error line="37" column="24" source="standard:property-wrapping" />
@@ -321,40 +297,6 @@
         <error line="77" column="58" source="standard:function-signature" />
         <error line="77" column="83" source="standard:function-signature" />
         <error line="77" column="105" source="standard:function-signature" />
-    </file>
-    <file name="src/main/kotlin/software/barad1tos/puppet/inspections/OpenVoxInspectionSupport.kt">
-        <error line="11" column="1" source="standard:no-empty-first-line-in-class-body" />
-        <error line="12" column="30" source="standard:multiline-expression-wrapping" />
-        <error line="13" column="18" source="standard:argument-list-wrapping" />
-        <error line="13" column="29" source="standard:argument-list-wrapping" />
-        <error line="13" column="45" source="standard:argument-list-wrapping" />
-        <error line="13" column="60" source="standard:argument-list-wrapping" />
-        <error line="13" column="69" source="standard:argument-list-wrapping" />
-        <error line="14" column="24" source="standard:argument-list-wrapping" />
-        <error line="14" column="46" source="standard:argument-list-wrapping" />
-        <error line="14" column="58" source="standard:argument-list-wrapping" />
-        <error line="17" column="24" source="standard:multiline-expression-wrapping" />
-        <error line="56" column="24" source="standard:function-signature" />
-        <error line="56" column="45" source="standard:function-signature" />
-        <error line="56" column="57" source="standard:function-signature" />
-        <error line="65" column="35" source="standard:multiline-expression-wrapping" />
-        <error line="66" column="20" source="standard:argument-list-wrapping" />
-        <error line="66" column="31" source="standard:argument-list-wrapping" />
-        <error line="66" column="42" source="standard:argument-list-wrapping" />
-        <error line="66" column="53" source="standard:argument-list-wrapping" />
-        <error line="67" column="18" source="standard:argument-list-wrapping" />
-        <error line="67" column="26" source="standard:argument-list-wrapping" />
-        <error line="67" column="36" source="standard:argument-list-wrapping" />
-        <error line="67" column="47" source="standard:argument-list-wrapping" />
-        <error line="68" column="17" source="standard:argument-list-wrapping" />
-        <error line="68" column="26" source="standard:argument-list-wrapping" />
-        <error line="68" column="34" source="standard:argument-list-wrapping" />
-        <error line="71" column="27" source="standard:function-signature" />
-        <error line="71" column="48" source="standard:function-signature" />
-        <error line="71" column="64" source="standard:function-signature" />
-        <error line="76" column="22" source="standard:multiline-expression-wrapping" />
-        <error line="80" column="21" source="standard:multiline-expression-wrapping" />
-        <error line="80" column="31" source="standard:chain-method-continuation" />
     </file>
     <file name="src/main/kotlin/software/barad1tos/puppet/inspections/OpenVoxLegacyFactInspection.kt">
         <error line="17" column="1" source="standard:no-empty-first-line-in-class-body" />
@@ -470,22 +412,6 @@
         <error line="10" column="44" source="standard:function-signature" />
         <error line="10" column="63" source="standard:function-signature" />
     </file>
-    <file name="src/main/kotlin/software/barad1tos/puppet/parser/OpenVoxParserDefinition.kt">
-        <error line="24" column="5" source="standard:blank-line-before-declaration" />
-        <error line="25" column="5" source="standard:blank-line-before-declaration" />
-        <error line="26" column="5" source="standard:blank-line-before-declaration" />
-        <error line="27" column="5" source="standard:blank-line-before-declaration" />
-        <error line="28" column="5" source="standard:blank-line-before-declaration" />
-        <error line="29" column="5" source="standard:blank-line-before-declaration" />
-        <error line="30" column="5" source="standard:blank-line-before-declaration" />
-        <error line="39" column="5" source="standard:blank-line-before-declaration" />
-        <error line="40" column="5" source="standard:blank-line-before-declaration" />
-        <error line="41" column="5" source="standard:blank-line-before-declaration" />
-        <error line="42" column="5" source="standard:blank-line-before-declaration" />
-        <error line="43" column="5" source="standard:blank-line-before-declaration" />
-        <error line="44" column="5" source="standard:blank-line-before-declaration" />
-        <error line="45" column="5" source="standard:blank-line-before-declaration" />
-    </file>
     <file name="src/main/kotlin/software/barad1tos/puppet/parser/OpenVoxParserUtil.kt">
         <error line="8" column="1" source="standard:no-empty-first-line-in-class-body" />
         <error line="9" column="35" source="standard:multiline-expression-wrapping" />
@@ -508,36 +434,6 @@
     <file name="src/main/kotlin/software/barad1tos/puppet/project/OpenVoxFileReference.kt">
         <error line="17" column="1" source="standard:no-empty-first-line-in-class-body" />
         <error line="31" column="26" source="standard:multiline-expression-wrapping" />
-    </file>
-    <file name="src/main/kotlin/software/barad1tos/puppet/project/OpenVoxHieraLineMarkerProvider.kt">
-        <error line="17" column="43" source="standard:parameter-list-wrapping" />
-        <error line="17" column="43" source="standard:function-signature" />
-        <error line="17" column="64" source="standard:parameter-list-wrapping" />
-        <error line="17" column="64" source="standard:function-signature" />
-        <error line="17" column="121" source="standard:max-line-length" />
-        <error line="17" column="122" source="standard:parameter-list-wrapping" />
-        <error line="17" column="122" source="standard:function-signature" />
-        <error line="19" column="21" source="standard:multiline-expression-wrapping" />
-        <error line="22" column="39" source="standard:argument-list-wrapping" />
-        <error line="22" column="44" source="standard:argument-list-wrapping" />
-        <error line="22" column="49" source="standard:binary-expression-wrapping" />
-        <error line="22" column="56" source="standard:argument-list-wrapping" />
-        <error line="22" column="86" source="standard:argument-list-wrapping" />
-        <error line="22" column="115" source="standard:argument-list-wrapping" />
-        <error line="22" column="121" source="standard:max-line-length" />
-        <error line="26" column="23" source="standard:multiline-expression-wrapping" />
-        <error line="26" column="37" source="standard:chain-method-continuation" />
-        <error line="26" column="51" source="standard:chain-method-continuation" />
-        <error line="26" column="71" source="standard:argument-list-wrapping" />
-        <error line="26" column="94" source="standard:argument-list-wrapping" />
-        <error line="26" column="99" source="standard:argument-list-wrapping" />
-        <error line="26" column="116" source="standard:chain-method-continuation" />
-        <error line="26" column="121" source="standard:max-line-length" />
-        <error line="26" column="126" source="standard:argument-list-wrapping" />
-        <error line="26" column="133" source="standard:argument-list-wrapping" />
-        <error line="26" column="134" source="standard:argument-list-wrapping" />
-        <error line="33" column="19" source="standard:multiline-expression-wrapping" />
-        <error line="33" column="46" source="standard:chain-method-continuation" />
     </file>
     <file name="src/main/kotlin/software/barad1tos/puppet/project/OpenVoxProjectReferenceContributor.kt">
         <error line="24" column="1" source="standard:no-empty-first-line-in-class-body" />
@@ -761,21 +657,6 @@
         <error line="68" column="47" source="standard:argument-list-wrapping" />
         <error line="79" column="20" source="standard:multiline-expression-wrapping" />
         <error line="85" column="28" source="standard:multiline-expression-wrapping" />
-    </file>
-    <file name="src/main/kotlin/software/barad1tos/puppet/resolve/OpenVoxResolver.kt">
-        <error line="12" column="1" source="standard:no-empty-first-line-in-class-body" />
-        <error line="24" column="21" source="standard:chain-method-continuation" />
-        <error line="33" column="17" source="standard:function-signature" />
-        <error line="33" column="35" source="standard:function-signature" />
-        <error line="33" column="49" source="standard:function-signature" />
-        <error line="33" column="111" source="standard:function-signature" />
-        <error line="33" column="114" source="standard:function-signature" />
-        <error line="36" column="18" source="standard:function-signature" />
-        <error line="36" column="36" source="standard:function-signature" />
-        <error line="36" column="64" source="standard:function-signature" />
-        <error line="41" column="22" source="standard:statement-wrapping" />
-        <error line="41" column="84" source="standard:statement-wrapping" />
-        <error line="41" column="90" source="standard:statement-wrapping" />
     </file>
     <file name="src/main/kotlin/software/barad1tos/puppet/resolve/OpenVoxScope.kt">
         <error line="13" column="32" source="standard:multiline-expression-wrapping" />
