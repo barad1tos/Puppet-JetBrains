@@ -18,7 +18,11 @@ _FORBIDDEN_VISIBLE_TRACES = (
 
 def check_visible_traces(report: Report) -> None:
     changelog = parse_latest_changelog_entry()
-    plugin_xml = load_plugin_xml_metadata()
+    try:
+        plugin_xml = load_plugin_xml_metadata()
+    except ValueError as error:
+        report.error("plugin.xml", str(error))
+        return
 
     visible_docs = {
         "CHANGELOG.md": changelog.body if changelog is not None else "",
