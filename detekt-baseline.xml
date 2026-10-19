@@ -9,7 +9,6 @@
     <ID>MagicNumber:OpenVoxKnowledge.kt$OpenVoxKnowledge$4</ID>
     <ID>MagicNumber:OpenVoxLexerAdapter.kt$OpenVoxLexerAdapter$15</ID>
     <ID>MagicNumber:OpenVoxReferenceContributor.kt$QuotedClassProvider$3</ID>
-    <ID>MagicNumber:OpenVoxHieraLineMarkerProvider.kt$OpenVoxHieraLineMarkerProvider$20</ID>
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$assertTrue("${failures.size}/${files.size} .$extension files failed (allowed: $allowed)", failures.size &lt;= allowed)</ID>
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$val files = roots.flatMap { root -> File(root).walkTopDown().filter { it.isFile &amp;&amp; it.extension == extension }.toList() }</ID>
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$val paths = requireNotNull(System.getProperty("openvox.corpus")) { "Set -Dopenvox.corpus to run external corpus tests" }</ID>
@@ -22,13 +21,10 @@
     <ID>MaxLineLength:OpenVoxScope.kt$OpenVoxScope$declarationsIn(scope).byName[wanted]?.lastOrNull { it.textRange.endOffset &lt;= usage.textOffset }?.let { return it }</ID>
     <ID>MaxLineLength:OpenVoxSyntaxHighlighter.kt$OpenVoxColors$val BAD_CHARACTER = createTextAttributesKey("OPENVOX_BAD_CHARACTER", com.intellij.openapi.editor.HighlighterColors.BAD_CHARACTER)</ID>
     <ID>MaxLineLength:OpenVoxUnresolvedVariableInspection.kt$OpenVoxUnresolvedVariableInspection.&lt;no name provided>$if (element.node?.elementType != T.VARIABLE_EXPR &amp;&amp; !OpenVoxReferenceContext.isInterpolationVariable(element)) return</ID>
-    <ID>MaxLineLength:OpenVoxUnusedParameterInspection.kt$OpenVoxUnusedParameterInspection.&lt;no name provided>$(candidate.node?.elementType == T.VARIABLE_EXPR || OpenVoxReferenceContext.isInterpolationVariable(candidate))</ID>
-    <ID>MaxLineLength:OpenVoxUnusedParameterInspection.kt$OpenVoxUnusedParameterInspection.&lt;no name provided>$OpenVoxScope.normalise(candidate.text) == name</ID>
     <ID>UnusedParameter:OpenVoxParserUtil.kt$OpenVoxParserUtil$level: Int</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var ALIGN_HASH_ARROWS: Boolean = true</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var ALIGN_RESOURCE_ARROWS: Boolean = true</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var ALIGN_SELECTOR_ARROWS: Boolean = true</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var SPACE_WITHIN_HASH_BRACES: Boolean = true</ID>
-    <ID>VariableNaming:OpenVoxUnusedParameterInspection.kt$OpenVoxUnusedParameterInspection$private val LOCAL_SCOPES = setOf(T.DEFINE_DEFINITION, T.FUNCTION_DEFINITION, T.LAMBDA, T.PLAN_DEFINITION)</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -13,6 +13,9 @@ import software.barad1tos.puppet.index.OpenVoxDeclarationKind
 import software.barad1tos.puppet.psi.OpenVoxNamedElement
 import software.barad1tos.puppet.psi.OpenVoxTypes as T
 
+/** Caps the gutter popup; a parameter set in more data files than this is rare and the list stays readable. */
+private const val MAX_HIERA_TARGETS = 20
+
 class OpenVoxHieraLineMarkerProvider : RelatedItemLineMarkerProvider() {
     override fun collectNavigationMarkers(
         element: PsiElement,
@@ -37,7 +40,7 @@ class OpenVoxHieraLineMarkerProvider : RelatedItemLineMarkerProvider() {
                 .getContainingFiles(HIERA_INDEX_KEY, key, GlobalSearchScope.allScope(project))
                 .asSequence()
                 .filter { "/data/" in it.path.replace('\\', '/') }
-                .take(20)
+                .take(MAX_HIERA_TARGETS)
                 .mapNotNull(manager::findFile)
                 .toList()
         if (targets.isEmpty()) return
