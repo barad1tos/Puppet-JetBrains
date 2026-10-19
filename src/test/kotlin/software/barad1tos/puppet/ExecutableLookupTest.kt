@@ -63,6 +63,13 @@ class ExecutableLookupTest : TestCase() {
         assertEquals(exe, ExecutableLookup(bin.path, "EXE;garbage", isWindows = true).find("puppet"))
     }
 
+    fun testQuotedPathEntriesAreUnquoted() {
+        val bin = directory("Program Files")
+        val exe = file(bin, "puppet.exe", executable = true)
+
+        assertEquals(exe, ExecutableLookup("\"${bin.path}\"", ".EXE", isWindows = true).find("puppet"))
+    }
+
     private fun directory(name: String): File = File(root, name).also { assertTrue(it.mkdir()) }
 
     private fun file(

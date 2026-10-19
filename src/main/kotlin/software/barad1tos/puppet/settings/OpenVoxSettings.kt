@@ -63,7 +63,7 @@ internal class ExecutableLookup(
         pathValue
             .orEmpty()
             .split(File.pathSeparator)
-            .map(::File)
+            .map { File(it.trim().removeSurrounding("\"")) } // installers sometimes quote Windows entries
             .filter { it.isAbsolute && it.isDirectory }
 
     private val windowsExtensions: List<String> =
