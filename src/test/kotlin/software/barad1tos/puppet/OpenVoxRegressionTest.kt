@@ -90,9 +90,7 @@ class OpenVoxRegressionTest : BasePlatformTestCase() {
         val restarted = OpenVoxLexerAdapter()
         restarted.start(text, offset, text.length, state)
         val actual = mutableListOf<String>()
-        while (restarted.tokenType !=
-            null
-        ) {
+        while (restarted.tokenType != null) {
             actual += "${restarted.tokenType}:${restarted.tokenText}"
             restarted.advance()
         }

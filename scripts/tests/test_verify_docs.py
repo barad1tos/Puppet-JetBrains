@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import shutil
 import sys
 import tempfile
 import textwrap
@@ -54,7 +55,7 @@ def plugin_xml_text(change_notes: str = CHANGE_NOTES, descriptor: str = "", desc
 class VerifyDocsTest(unittest.TestCase):
     def setUp(self) -> None:
         self.directory = Path(tempfile.mkdtemp(prefix="verify-docs-"))
-        self.addCleanup(lambda: [path.unlink() for path in self.directory.iterdir()] and self.directory.rmdir())
+        self.addCleanup(shutil.rmtree, self.directory, ignore_errors=True)
 
     def run_checks(self, *, version: str = "0.3.0", changelog_text: str = CHANGELOG, xml_text: str | None = None) -> Report:
         gradle = self.directory / "gradle.properties"
