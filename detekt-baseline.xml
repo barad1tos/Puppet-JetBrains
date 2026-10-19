@@ -2,34 +2,18 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexCondition:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$type == T.LBRACE &amp;&amp; (ownerType == T.IDENTIFIER || ownerType == T.BARE_WORD || ownerType == T.CLASSREF)</ID>
-    <ID>CyclomaticComplexMethod:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$fun placeAt(position: PsiElement): OpenVoxCompletionPlace</ID>
-    <ID>CyclomaticComplexMethod:OpenVoxCompletionContributor.kt$OpenVoxCompletionProvider$override fun addCompletions( parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet, )</ID>
     <ID>CyclomaticComplexMethod:OpenVoxFoldingBuilder.kt$OpenVoxFoldingBuilder$override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array&lt;FoldingDescriptor></ID>
     <ID>CyclomaticComplexMethod:OpenVoxSyntaxHighlighter.kt$OpenVoxSyntaxHighlighter$override fun getTokenHighlights(tokenType: IElementType): Array&lt;TextAttributesKey></ID>
-    <ID>EmptyElseBlock:OpenVoxResolver.kt$OpenVoxResolver$if (key.startsWith(prefix)) names += key.removePrefix(prefix)</ID>
-    <ID>InstanceOfCheckForException:OpenVoxExternalAnnotator.kt$OpenVoxExternalAnnotator$exception is ControlFlowException</ID>
-    <ID>LoopWithTooManyJumpStatements:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$for</ID>
-    <ID>MagicNumber:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$3</ID>
-    <ID>MagicNumber:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$400</ID>
-    <ID>MagicNumber:OpenVoxCompletionContributor.kt$ArrowInsertHandler$4</ID>
     <ID>MagicNumber:OpenVoxConfigurable.kt$OpenVoxConfigurable$40</ID>
-    <ID>MagicNumber:OpenVoxExternalAnnotator.kt$OpenVoxExternalAnnotator$4</ID>
-    <ID>MagicNumber:OpenVoxHieraLineMarkerProvider.kt$OpenVoxHieraLineMarkerProvider$20</ID>
     <ID>MagicNumber:OpenVoxKnowledge.kt$OpenVoxKnowledge$3</ID>
     <ID>MagicNumber:OpenVoxKnowledge.kt$OpenVoxKnowledge$4</ID>
     <ID>MagicNumber:OpenVoxLexerAdapter.kt$OpenVoxLexerAdapter$15</ID>
-    <ID>MagicNumber:OpenVoxProjectReferenceContributor.kt$FilePathProvider$3</ID>
     <ID>MagicNumber:OpenVoxReferenceContributor.kt$QuotedClassProvider$3</ID>
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$assertTrue("${failures.size}/${files.size} .$extension files failed (allowed: $allowed)", failures.size &lt;= allowed)</ID>
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$val files = roots.flatMap { root -> File(root).walkTopDown().filter { it.isFile &amp;&amp; it.extension == extension }.toList() }</ID>
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$val paths = requireNotNull(System.getProperty("openvox.corpus")) { "Set -Dopenvox.corpus to run external corpus tests" }</ID>
     <ID>MaxLineLength:OpenVoxBlock.kt$OpenVoxBlock$T.RESOURCE_BODY -> if (childType == T.ATTRIBUTE_OPERATIONS) Indent.getNormalIndent() else Indent.getNoneIndent()</ID>
-    <ID>MaxLineLength:OpenVoxHieraLineMarkerProvider.kt$OpenVoxHieraLineMarkerProvider$if (OpenVoxDeclarationKind.of(owner) !in setOf(OpenVoxDeclarationKind.CLASS, OpenVoxDeclarationKind.DEFINE)) return</ID>
-    <ID>MaxLineLength:OpenVoxHieraLineMarkerProvider.kt$OpenVoxHieraLineMarkerProvider$override</ID>
-    <ID>MaxLineLength:OpenVoxHieraLineMarkerProvider.kt$OpenVoxHieraLineMarkerProvider$val</ID>
     <ID>MaxLineLength:OpenVoxLexerAdapter.kt$OpenVoxLexerAdapter$override</ID>
-    <ID>MaxLineLength:OpenVoxProjectReferenceContributor.kt$FilePathProvider$val quoted = element.firstChild?.takeIf { it.node?.elementType == T.SQ_STRING } ?: return PsiReference.EMPTY_ARRAY</ID>
     <ID>MaxLineLength:OpenVoxReferenceContributor.kt$OpenVoxReferenceContributor$registrar.registerReferenceProvider(PlatformPatterns.psiElement(OpenVoxDqString::class.java), QuotedClassProvider)</ID>
     <ID>MaxLineLength:OpenVoxReferenceContributor.kt$OpenVoxReferenceContributor$registrar.registerReferenceProvider(PlatformPatterns.psiElement(OpenVoxLiteralExpr::class.java), QuotedClassProvider)</ID>
     <ID>MaxLineLength:OpenVoxReferenceContributor.kt$QuotedClassProvider$return arrayOf(OpenVoxDeclarationReference(element, TextRange(1, text.lastIndex), listOf(OpenVoxDeclarationKind.CLASS)))</ID>
@@ -37,14 +21,10 @@
     <ID>MaxLineLength:OpenVoxScope.kt$OpenVoxScope$declarationsIn(scope).byName[wanted]?.lastOrNull { it.textRange.endOffset &lt;= usage.textOffset }?.let { return it }</ID>
     <ID>MaxLineLength:OpenVoxSyntaxHighlighter.kt$OpenVoxColors$val BAD_CHARACTER = createTextAttributesKey("OPENVOX_BAD_CHARACTER", com.intellij.openapi.editor.HighlighterColors.BAD_CHARACTER)</ID>
     <ID>MaxLineLength:OpenVoxUnresolvedVariableInspection.kt$OpenVoxUnresolvedVariableInspection.&lt;no name provided>$if (element.node?.elementType != T.VARIABLE_EXPR &amp;&amp; !OpenVoxReferenceContext.isInterpolationVariable(element)) return</ID>
-    <ID>MaxLineLength:OpenVoxUnusedParameterInspection.kt$OpenVoxUnusedParameterInspection.&lt;no name provided>$(candidate.node?.elementType == T.VARIABLE_EXPR || OpenVoxReferenceContext.isInterpolationVariable(candidate))</ID>
-    <ID>MaxLineLength:OpenVoxUnusedParameterInspection.kt$OpenVoxUnusedParameterInspection.&lt;no name provided>$OpenVoxScope.normalise(candidate.text) == name</ID>
-    <ID>TooGenericExceptionCaught:OpenVoxExternalAnnotator.kt$OpenVoxExternalAnnotator$exception: Exception</ID>
     <ID>UnusedParameter:OpenVoxParserUtil.kt$OpenVoxParserUtil$level: Int</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var ALIGN_HASH_ARROWS: Boolean = true</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var ALIGN_RESOURCE_ARROWS: Boolean = true</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var ALIGN_SELECTOR_ARROWS: Boolean = true</ID>
     <ID>VariableNaming:OpenVoxCodeStyleSettings.kt$OpenVoxCodeStyleSettings$@JvmField var SPACE_WITHIN_HASH_BRACES: Boolean = true</ID>
-    <ID>VariableNaming:OpenVoxUnusedParameterInspection.kt$OpenVoxUnusedParameterInspection$private val LOCAL_SCOPES = setOf(T.DEFINE_DEFINITION, T.FUNCTION_DEFINITION, T.LAMBDA, T.PLAN_DEFINITION)</ID>
   </CurrentIssues>
 </SmellBaseline>

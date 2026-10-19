@@ -1,9 +1,9 @@
 package software.barad1tos.puppet
 
+import com.intellij.codeInsight.lookup.LookupElementPresentation
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 class OpenVoxCompletionTest : BasePlatformTestCase() {
-
     private var autoInserted: String? = null
 
     private fun completions(text: String): List<String> {
@@ -14,7 +14,10 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
         return items.orEmpty()
     }
 
-    private fun assertOffers(items: List<String>, vararg expected: String) {
+    private fun assertOffers(
+        items: List<String>,
+        vararg expected: String,
+    ) {
         val inserted = autoInserted
         if (inserted != null) {
             expected.forEach { assertTrue("$it was not offered or inserted", inserted.contains(it)) }
@@ -54,6 +57,52 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
         assertOffers(items, "apache")
     }
 
+    fun testProjectDeclarationsCarryTheirKind() {
+        myFixture.addFileToProject("site/manifests/init.pp", "define site::vhost () { }\nclass site::web { }")
+        myFixture.configureByText("site.pp", "sit<caret>")
+        val typeTexts =
+            myFixture.completeBasic().orEmpty().associate { item ->
+                val presentation = LookupElementPresentation()
+                item.renderElement(presentation)
+                item.lookupString to presentation.typeText
+            }
+        assertEquals("defined type", typeTexts["site::vhost"])
+        assertEquals("class", typeTexts["site::web"])
+    }
+
+    fun testResourceTypesOfferedAtResourceStart() {
+        myFixture.addFileToProject("site/manifests/vhost.pp", "define site::vhost () { }")
+        myFixture.configureByText("site.pp", "s<caret> { 'nginx': }")
+        val typeTexts =
+            myFixture.completeBasic().orEmpty().associate { item ->
+                val presentation = LookupElementPresentation()
+                item.renderElement(presentation)
+                item.lookupString to presentation.typeText
+            }
+        assertEquals("resource type", typeTexts["service"])
+        assertEquals("defined type", typeTexts["site::vhost"])
+    }
+
+    fun testAttributeNameCompletionInsertsArrow() {
+        myFixture.configureByText("site.pp", "file { '/etc/motd':\n  ensu<caret>\n}")
+        myFixture.completeBasic()
+        myFixture.lookup?.let { lookup ->
+            lookup.currentItem = lookup.items.first { it.lookupString == "ensure" }
+            myFixture.finishLookup(com.intellij.codeInsight.lookup.Lookup.NORMAL_SELECT_CHAR)
+        }
+        myFixture.checkResult("file { '/etc/motd':\n  ensure => <caret>\n}")
+    }
+
+    fun testAttributeNameCompletionKeepsAnExistingArrow() {
+        myFixture.configureByText("site.pp", "file { '/etc/motd':\n  ensu<caret> => file,\n}")
+        myFixture.completeBasic()
+        myFixture.lookup?.let { lookup ->
+            lookup.currentItem = lookup.items.first { it.lookupString == "ensure" }
+            myFixture.finishLookup(com.intellij.codeInsight.lookup.Lookup.NORMAL_SELECT_CHAR)
+        }
+        myFixture.checkResult("file { '/etc/motd':\n  ensure<caret> => file,\n}")
+    }
+
     fun testTypeAliasesOfferedWhereATypeIsExpected() {
         myFixture.addFileToProject("profile/manifests/types.pp", "type Profile::Port = Integer[1, 65535]")
         val items = completions("class demo (Prof<caret>) { }")
@@ -61,14 +110,16 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
     }
 
     fun testVariablesInScope() {
-        val items = completions(
-            """
-            class demo (String ${'$'}greeting = 'hi') {
-              ${'$'}target = '/etc/motd'
-              notify { 'x': message => ${'$'}<caret> }
-            }
-            """.trimIndent(),
-        )
-        assertOffers(items, "\$greeting", "\$target")
+        val items =
+            completions(
+                """
+                class demo (String ${'$'}greeting = 'hi') {
+                  ${'$'}target = '/etc/motd'
+                  notify { 'x': message => $<caret> }
+                }
+                """.trimIndent(),
+            )
+        // Both names already occur in the fixture, so only the lookup itself can prove they were offered.
+        assertContainsElements(items, "\$greeting", "\$target")
     }
 }

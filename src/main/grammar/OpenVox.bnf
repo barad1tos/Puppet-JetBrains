@@ -220,11 +220,9 @@ interpolation ::= INTERP_START (expr | keyword_as_name)? INTERP_END { pin=1 }
 
 heredoc ::= HD_TAG (expr (COMMA expr)*)? RPAREN { pin=1 }
 
-variable_expr ::= VARIABLE {
-  mixin="software.barad1tos.puppet.psi.impl.OpenVoxVariableMixin"
-}
+variable_expr ::= VARIABLE
 
-type_reference ::= CLASSREF { mixin="software.barad1tos.puppet.psi.impl.OpenVoxTypeReferenceMixin" }
+type_reference ::= CLASSREF
 
 word_ref ::= BARE_WORD | IDENTIFIER
 

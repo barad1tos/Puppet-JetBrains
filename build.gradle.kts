@@ -123,6 +123,7 @@ intellijPlatform {
 val generatedSrc = layout.buildDirectory.dir("generated/sources/grammar")
 
 val generateOpenVoxParser by tasks.registering(GenerateParserTask::class) {
+    description = "Generates the OpenVox parser and PSI classes from the BNF grammar."
     sourceFile = file("src/main/grammar/OpenVox.bnf")
     targetRootOutputDir = generatedSrc.map { it.asFile }
     pathToParser = "software/barad1tos/puppet/parser/OpenVoxParser.java"
@@ -131,6 +132,7 @@ val generateOpenVoxParser by tasks.registering(GenerateParserTask::class) {
 }
 
 val generateOpenVoxLexer by tasks.registering(GenerateLexerTask::class) {
+    description = "Generates the OpenVox lexer from the JFlex grammar."
     sourceFile = file("src/main/grammar/OpenVox.flex")
     targetOutputDir = generatedSrc.map { it.dir("software/barad1tos/puppet/lexer").asFile }
     skeleton = file("src/main/grammar/idea-flex.skeleton")

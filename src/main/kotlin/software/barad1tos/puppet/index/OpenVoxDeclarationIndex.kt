@@ -43,7 +43,7 @@ enum class OpenVoxDeclarationKind(
 }
 
 class OpenVoxDeclarationIndex : ScalarIndexExtension<String>() {
-    override fun getName(): ID<String, Void> = KEY
+    override fun getName(): ID<String, Void> = DECLARATION_INDEX_KEY
 
     override fun getVersion(): Int = 2
 
@@ -56,32 +56,36 @@ class OpenVoxDeclarationIndex : ScalarIndexExtension<String>() {
 
     override fun getIndexer(): DataIndexer<String, Void, FileContent> =
         DataIndexer { content ->
-            val file = content.psiFile
-            declarationsIn(file)
+            OpenVoxDeclarations
+                .declarationsIn(content.psiFile)
                 .mapNotNull { declaration ->
                     val kind = OpenVoxDeclarationKind.of(declaration) ?: return@mapNotNull null
                     val name = declaration.name ?: return@mapNotNull null
-                    keyFor(kind, name)
+                    OpenVoxDeclarations.keyFor(kind, name)
                 }.associateWith { null }
         }
 
     companion object {
         const val INDEX_NAME = "software.barad1tos.puppet-tools.declarations"
-        val KEY: ID<String, Void> = ID.create(INDEX_NAME)
-
-        fun keyFor(
-            kind: OpenVoxDeclarationKind,
-            name: String,
-        ): String = "${kind.prefix}:${name.removePrefix("::").lowercase()}"
-
-        fun declarationsIn(file: PsiFile): List<OpenVoxNamedElement> =
-            CachedValuesManager.getCachedValue(file) {
-                CachedValueProvider.Result.create(
-                    PsiTreeUtil
-                        .findChildrenOfType(file, OpenVoxNamedElement::class.java)
-                        .filter { OpenVoxDeclarationKind.of(it) != null },
-                    file,
-                )
-            }
     }
+}
+
+val DECLARATION_INDEX_KEY: ID<String, Void> = ID.create(OpenVoxDeclarationIndex.INDEX_NAME)
+
+/** Key format and PSI extraction shared by the declaration indexer and its queries in `OpenVoxResolver`. */
+object OpenVoxDeclarations {
+    fun keyFor(
+        kind: OpenVoxDeclarationKind,
+        name: String,
+    ): String = "${kind.prefix}:${name.removePrefix("::").lowercase()}"
+
+    fun declarationsIn(file: PsiFile): List<OpenVoxNamedElement> =
+        CachedValuesManager.getCachedValue(file) {
+            CachedValueProvider.Result.create(
+                PsiTreeUtil
+                    .findChildrenOfType(file, OpenVoxNamedElement::class.java)
+                    .filter { OpenVoxDeclarationKind.of(it) != null },
+                file,
+            )
+        }
 }

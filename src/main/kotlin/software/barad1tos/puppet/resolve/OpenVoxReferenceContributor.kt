@@ -46,7 +46,7 @@ class OpenVoxReferenceContributor : PsiReferenceContributor() {
 }
 
 private object QuotedClassProvider : PsiReferenceProvider() {
-    private val CLASS_NAME = Regex("(?:::)?[a-z][\\w]*(?:::[a-z][\\w]*)*")
+    private val CLASS_NAME = Regex("(?:::)?[a-z]\\w*(?:::[a-z]\\w*)*")
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
         val isClassCall = OpenVoxReferenceContext.statementCallName(element) in OpenVoxReferenceContext.CLASS_CALLS ||
             OpenVoxReferenceContext.parenthesisedCallName(element) in OpenVoxReferenceContext.CLASS_CALLS

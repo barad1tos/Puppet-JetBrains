@@ -7,13 +7,19 @@ import software.barad1tos.puppet.OpenVoxIcons
 
 class OpenVoxColorSettingsPage : ColorSettingsPage {
     override fun getIcon() = OpenVoxIcons.FILE
+
     override fun getHighlighter() = OpenVoxSyntaxHighlighter()
+
     override fun getAdditionalHighlightingTagToDescriptorMap() = null
-    override fun getAttributeDescriptors() = DESCRIPTORS
+
+    override fun getAttributeDescriptors(): Array<AttributesDescriptor> = DESCRIPTORS
+
     override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
+
     override fun getDisplayName() = "Puppet"
 
-    override fun getDemoText() = """
+    override fun getDemoText() =
+        """
         # Manage the OpenVox agent itself.
         class profile::openvox::agent (
           Enum['running', 'stopped'] ${'$'}ensure  = 'running',
@@ -36,27 +42,26 @@ class OpenVoxColorSettingsPage : ColorSettingsPage {
 
           File[${'$'}conf] ~> Service['puppet']
         }
-    """.trimIndent()
-
-    private companion object {
-        val DESCRIPTORS = arrayOf(
-            AttributesDescriptor("Keyword", OpenVoxColors.KEYWORD),
-            AttributesDescriptor("Comment", OpenVoxColors.COMMENT),
-            AttributesDescriptor("String", OpenVoxColors.STRING),
-            AttributesDescriptor("String//Escape sequence", OpenVoxColors.ESCAPE),
-            AttributesDescriptor("String//Interpolation", OpenVoxColors.INTERPOLATION),
-            AttributesDescriptor("Number", OpenVoxColors.NUMBER),
-            AttributesDescriptor("Variable", OpenVoxColors.VARIABLE),
-            AttributesDescriptor("Data type or resource type", OpenVoxColors.DATA_TYPE),
-            AttributesDescriptor("Identifier", OpenVoxColors.IDENTIFIER),
-            AttributesDescriptor("Operator", OpenVoxColors.OPERATOR),
-            AttributesDescriptor("Regular expression", OpenVoxColors.REGEX),
-            AttributesDescriptor("Braces", OpenVoxColors.BRACES),
-            AttributesDescriptor("Brackets", OpenVoxColors.BRACKETS),
-            AttributesDescriptor("Parentheses", OpenVoxColors.PARENTHESES),
-            AttributesDescriptor("Comma and semicolon", OpenVoxColors.COMMA_SEMI),
-            AttributesDescriptor("EPP//Tag", OpenVoxColors.EPP_TAG),
-            AttributesDescriptor("EPP//Template text", OpenVoxColors.EPP_TEXT),
-        )
-    }
+        """.trimIndent()
 }
+
+private val DESCRIPTORS =
+    arrayOf(
+        AttributesDescriptor("Keyword", OpenVoxColors.KEYWORD),
+        AttributesDescriptor("Comment", OpenVoxColors.COMMENT),
+        AttributesDescriptor("String", OpenVoxColors.STRING),
+        AttributesDescriptor("String//Escape sequence", OpenVoxColors.ESCAPE),
+        AttributesDescriptor("String//Interpolation", OpenVoxColors.INTERPOLATION),
+        AttributesDescriptor("Number", OpenVoxColors.NUMBER),
+        AttributesDescriptor("Variable", OpenVoxColors.VARIABLE),
+        AttributesDescriptor("Data type or resource type", OpenVoxColors.DATA_TYPE),
+        AttributesDescriptor("Identifier", OpenVoxColors.IDENTIFIER),
+        AttributesDescriptor("Operator", OpenVoxColors.OPERATOR),
+        AttributesDescriptor("Regular expression", OpenVoxColors.REGEX),
+        AttributesDescriptor("Braces", OpenVoxColors.BRACES),
+        AttributesDescriptor("Brackets", OpenVoxColors.BRACKETS),
+        AttributesDescriptor("Parentheses", OpenVoxColors.PARENTHESES),
+        AttributesDescriptor("Comma and semicolon", OpenVoxColors.COMMA_SEMI),
+        AttributesDescriptor("EPP//Tag", OpenVoxColors.EPP_TAG),
+        AttributesDescriptor("EPP//Template text", OpenVoxColors.EPP_TEXT),
+    )

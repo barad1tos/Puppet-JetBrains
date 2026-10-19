@@ -24,17 +24,17 @@ By participating, you agree to follow the [Code of Conduct](.github/CODE_OF_COND
 
 ## Project Structure
 
-| Path | What it does |
-|------|--------------|
-| `src/main/grammar/OpenVox.bnf` | Grammar-Kit grammar source for manifests and EPP templates |
-| `src/main/grammar/OpenVox.flex` | JFlex lexer source |
-| `src/main/kotlin/software/barad1tos/puppet/` | Hand-written Kotlin plugin code; class names keep the upstream `OpenVox` prefix |
-| `src/main/resources/META-INF/plugin.xml` | Plugin descriptor, extension registrations and Marketplace description |
-| `src/main/resources/openvox/*.tsv` | Generated language data: functions, types, attributes, metaparameters, data types and curated facts |
-| `tools/generate-openvox-data.py` | Generator that rebuilds the TSV files from an OpenVox checkout |
-| `src/test/kotlin/` | Parser, lexer, completion, resolve, inspection, formatter and regression tests |
-| `scripts/` | Release-metadata and plugin-verifier checks used by CI |
-| `build.gradle.kts` | Gradle build, Grammar-Kit generation, ktlint, detekt, Kover and plugin-verifier configuration |
+| Path                                         | What it does                                                                                        |
+|----------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `src/main/grammar/OpenVox.bnf`               | Grammar-Kit grammar source for manifests and EPP templates                                          |
+| `src/main/grammar/OpenVox.flex`              | JFlex lexer source                                                                                  |
+| `src/main/kotlin/software/barad1tos/puppet/` | Hand-written Kotlin plugin code; class names keep the upstream `OpenVox` prefix                     |
+| `src/main/resources/META-INF/plugin.xml`     | Plugin descriptor, extension registrations and Marketplace description                              |
+| `src/main/resources/openvox/*.tsv`           | Generated language data: functions, types, attributes, metaparameters, data types and curated facts |
+| `tools/generate-openvox-data.py`             | Generator that rebuilds the TSV files from an OpenVox checkout                                      |
+| `src/test/kotlin/`                           | Parser, lexer, completion, resolve, inspection, formatter and regression tests                      |
+| `scripts/`                                   | Release-metadata and plugin-verifier checks used by CI                                              |
+| `build.gradle.kts`                           | Gradle build, Grammar-Kit generation, ktlint, detekt, Kover and plugin-verifier configuration       |
 
 ## Generated Code
 

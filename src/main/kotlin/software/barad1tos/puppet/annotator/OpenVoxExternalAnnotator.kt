@@ -1,32 +1,34 @@
 package software.barad1tos.puppet.annotator
 
+import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
-import com.intellij.execution.util.ExecUtil
+import com.intellij.execution.process.CapturingProcessHandler
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.ExternalAnnotator
-import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.diagnostic.ControlFlowException
+import com.intellij.openapi.progress.EmptyProgressIndicator
+import com.intellij.openapi.progress.ProgressIndicator
+import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiFile
 import software.barad1tos.puppet.settings.OpenVoxSettings
+import java.io.IOException
 import java.nio.file.Files
+import java.nio.file.Path
+import java.util.concurrent.ConcurrentHashMap
 
-data class OpenVoxExternalMessage(
-    val line: Int,
-    val column: Int,
-    val severity: HighlightSeverity,
-    val message: String,
-    val source: String,
+data class OpenVoxAnnotatorInput(
+    val text: String,
 )
 
-data class OpenVoxAnnotatorInput(val text: String)
-
-class OpenVoxExternalAnnotator :
-    ExternalAnnotator<OpenVoxAnnotatorInput, List<OpenVoxExternalMessage>>() {
-
-    override fun collectInformation(file: PsiFile, editor: Editor, hasErrors: Boolean): OpenVoxAnnotatorInput? {
+class OpenVoxExternalAnnotator : ExternalAnnotator<OpenVoxAnnotatorInput, List<OpenVoxExternalMessage>>() {
+    override fun collectInformation(
+        file: PsiFile,
+        editor: Editor,
+        hasErrors: Boolean,
+    ): OpenVoxAnnotatorInput? {
         if (hasErrors) return null
         val settings = OpenVoxSettings.getInstance()
         if (!settings.runParserValidate && !settings.runPuppetLint) return null
@@ -40,7 +42,7 @@ class OpenVoxExternalAnnotator :
         val puppet = if (settings.runParserValidate) settings.resolvedPuppet() else null
         val lint = if (settings.runPuppetLint) settings.resolvedPuppetLint() else null
         if (puppet == null && lint == null) return emptyList()
-        var temporary: java.nio.file.Path? = null
+        var temporary: Path? = null
         return try {
             temporary = Files.createTempFile("openvox-", ".pp")
             Files.writeString(temporary, input.text)
@@ -48,25 +50,32 @@ class OpenVoxExternalAnnotator :
                 puppet?.let { addAll(runParserValidate(it, temporary.toString())) }
                 lint?.let { addAll(runPuppetLint(it, temporary.toString())) }
             }
-        } catch (exception: Exception) {
-            if (exception is ControlFlowException) throw exception
+        } catch (_: IOException) {
             emptyList()
         } finally {
-            temporary?.let { runCatching { Files.deleteIfExists(it) } }
+            temporary?.let(::deleteQuietly)
         }
     }
 
-    override fun apply(file: PsiFile, messages: List<OpenVoxExternalMessage>?, holder: AnnotationHolder) {
+    override fun apply(
+        file: PsiFile,
+        messages: List<OpenVoxExternalMessage>?,
+        holder: AnnotationHolder,
+    ) {
         val document = file.viewProvider.document ?: return
         messages.orEmpty().forEach { message ->
             val range = rangeFor(document, message) ?: return@forEach
-            holder.newAnnotation(message.severity, "${message.source}: ${message.message}")
+            holder
+                .newAnnotation(message.severity, "${message.source}: ${message.message}")
                 .range(range)
                 .create()
         }
     }
 
-    private fun rangeFor(document: Document, message: OpenVoxExternalMessage): TextRange? {
+    private fun rangeFor(
+        document: Document,
+        message: OpenVoxExternalMessage,
+    ): TextRange? {
         val line = (message.line - 1).coerceIn(0, (document.lineCount - 1).coerceAtLeast(0))
         val lineStart = document.getLineStartOffset(line)
         val lineEnd = document.getLineEndOffset(line)
@@ -74,51 +83,69 @@ class OpenVoxExternalAnnotator :
         return if (start >= lineEnd) TextRange(lineStart, lineEnd) else TextRange(start, lineEnd)
     }
 
-    private fun runParserValidate(executable: String, path: String): List<OpenVoxExternalMessage> {
-        val output = run(GeneralCommandLine(executable, "parser", "validate", path)) ?: return emptyList()
-        return VALIDATE_PATTERN.findAll(output).map { match ->
-            OpenVoxExternalMessage(
-                line = match.groupValues[2].toIntOrNull() ?: 1,
-                column = match.groupValues[3].toIntOrNull() ?: 1,
-                severity = HighlightSeverity.ERROR,
-                message = match.groupValues[1].trim(),
-                source = "puppet",
-            )
-        }.toList()
+    private fun runParserValidate(
+        executable: String,
+        path: String,
+    ): List<OpenVoxExternalMessage> =
+        runTool(GeneralCommandLine(executable, "parser", "validate", path))
+            ?.let(OpenVoxToolOutput::parseValidate)
+            .orEmpty()
+
+    private fun runPuppetLint(
+        executable: String,
+        path: String,
+    ): List<OpenVoxExternalMessage> =
+        runTool(
+            GeneralCommandLine(executable, "--log-format", OpenVoxToolOutput.LINT_LOG_FORMAT, path),
+        )?.let(OpenVoxToolOutput::parseLint)
+            .orEmpty()
+
+    private fun deleteQuietly(path: Path) {
+        try {
+            Files.deleteIfExists(path)
+        } catch (_: IOException) {
+            // Best effort: a leftover file in the system temp directory is harmless.
+        }
     }
+}
 
-    private fun runPuppetLint(executable: String, path: String): List<OpenVoxExternalMessage> {
-        val command = GeneralCommandLine(
-            executable,
-            "--log-format", "%{line}:%{column}:%{kind}:%{message}",
-            path,
-        )
-        val output = run(command) ?: return emptyList()
-        return output.lineSequence().mapNotNull { line ->
-            val parts = line.split(':', limit = 4)
-            if (parts.size < 4) return@mapNotNull null
-            OpenVoxExternalMessage(
-                line = parts[0].trim().toIntOrNull() ?: return@mapNotNull null,
-                column = parts[1].trim().toIntOrNull() ?: 1,
-                severity = if (parts[2].trim().equals("error", ignoreCase = true)) HighlightSeverity.ERROR
-                else HighlightSeverity.WARNING,
-                message = parts[3].trim(),
-                source = "puppet-lint",
-            )
-        }.toList()
+private const val TOOL_TIMEOUT_MS = 10_000
+
+private val LOG = logger<OpenVoxExternalAnnotator>()
+
+/** Executables whose failure is already in the log; the annotator runs on every edit, so each is reported once. */
+private val reportedTools: MutableSet<String> = ConcurrentHashMap.newKeySet()
+
+/**
+ * Runs [command] for at most [TOOL_TIMEOUT_MS], killing it as soon as [indicator] is cancelled.
+ * Returns its combined output, or null when the tool cannot start or times out;
+ * either failure is logged once per executable.
+ */
+internal fun runTool(
+    command: GeneralCommandLine,
+    indicator: ProgressIndicator = ProgressManager.getGlobalProgressIndicator() ?: EmptyProgressIndicator(),
+): String? {
+    val output =
+        try {
+            CapturingProcessHandler(command.withRedirectErrorStream(true))
+                .runProcessWithProgressIndicator(indicator, TOOL_TIMEOUT_MS)
+        } catch (exception: ExecutionException) {
+            reportFailure(command, exception.message ?: exception.javaClass.simpleName)
+            return null
+        }
+    indicator.checkCanceled()
+    if (output.isTimeout) {
+        reportFailure(command, "no answer within $TOOL_TIMEOUT_MS ms")
+        return null
     }
+    return output.stdout
+}
 
-    private fun run(command: GeneralCommandLine): String? = try {
-        val result = ExecUtil.execAndGetOutput(command.withRedirectErrorStream(true), TIMEOUT_MS)
-        result.stdout
-    } catch (exception: Exception) {
-        if (exception is ControlFlowException) throw exception
-        null
-    }
-
-    private companion object {
-        const val TIMEOUT_MS = 10_000
-
-        val VALIDATE_PATTERN = Regex("""Error:\s*(.+?)\s*\(file:[^,]+,\s*line:\s*(\d+),\s*column:\s*(\d+)\)""")
+private fun reportFailure(
+    command: GeneralCommandLine,
+    reason: String,
+) {
+    if (reportedTools.add(command.exePath)) {
+        LOG.warn("${command.exePath} did not run ($reason); its findings are missing from the editor")
     }
 }
