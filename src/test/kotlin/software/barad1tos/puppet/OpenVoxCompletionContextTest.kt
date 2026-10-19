@@ -64,6 +64,21 @@ class OpenVoxCompletionContextTest : BasePlatformTestCase() {
         )
     }
 
+    fun testDoubleQuotedFactKey() {
+        assertEquals(
+            OpenVoxCompletionPlace.FactName("os.", trusted = false),
+            placeAt("\$x = \$facts[\"os\"][<caret>]"),
+        )
+    }
+
+    fun testArrayElementIsStatement() {
+        assertEquals(OpenVoxCompletionPlace.Statement, placeAt("\$packages = ['nginx', <caret>]"))
+    }
+
+    fun testFactPathWithVariableKeyIsNotAFactName() {
+        assertFalse(placeAt("\$x = \$facts[\$key][<caret>]") is OpenVoxCompletionPlace.FactName)
+    }
+
     private companion object {
         const val CARET = "<caret>"
         const val DUMMY = "openvoxdummy"
