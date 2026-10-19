@@ -12,6 +12,7 @@ class OpenVoxToolOutputTest : TestCase() {
                 "(file: /tmp/openvox-1.pp, line: 3, column: 7)\n"
 
         assertEquals(
+            OpenVoxToolOutput.parseValidate(output),
             listOf(
                 OpenVoxExternalMessage(
                     line = 3,
@@ -21,12 +22,11 @@ class OpenVoxToolOutputTest : TestCase() {
                     source = "puppet",
                 ),
             ),
-            OpenVoxToolOutput.parseValidate(output),
         )
     }
 
     fun testValidateWithoutErrorsYieldsNothing() {
-        assertEquals(emptyList<OpenVoxExternalMessage>(), OpenVoxToolOutput.parseValidate(""))
+        assertEquals(OpenVoxToolOutput.parseValidate(""), emptyList<OpenVoxExternalMessage>())
     }
 
     fun testParsesLintKindsAndKeepsColonsInMessage() {
@@ -42,6 +42,6 @@ class OpenVoxToolOutputTest : TestCase() {
     }
 
     fun testSkipsLintLinesWithoutLineNumber() {
-        assertEquals(emptyList<OpenVoxExternalMessage>(), OpenVoxToolOutput.parseLint("WARNING: plugin x:y:z\n\n"))
+        assertEquals(OpenVoxToolOutput.parseLint("WARNING: plugin x:y:z\n\n"), emptyList<OpenVoxExternalMessage>())
     }
 }

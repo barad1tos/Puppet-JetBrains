@@ -2,14 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexCondition:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$type == T.LBRACE &amp;&amp; (ownerType == T.IDENTIFIER || ownerType == T.BARE_WORD || ownerType == T.CLASSREF)</ID>
-    <ID>CyclomaticComplexMethod:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$fun placeAt(position: PsiElement): OpenVoxCompletionPlace</ID>
     <ID>CyclomaticComplexMethod:OpenVoxCompletionContributor.kt$OpenVoxCompletionProvider$override fun addCompletions( parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet, )</ID>
     <ID>CyclomaticComplexMethod:OpenVoxFoldingBuilder.kt$OpenVoxFoldingBuilder$override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array&lt;FoldingDescriptor></ID>
     <ID>CyclomaticComplexMethod:OpenVoxSyntaxHighlighter.kt$OpenVoxSyntaxHighlighter$override fun getTokenHighlights(tokenType: IElementType): Array&lt;TextAttributesKey></ID>
-    <ID>LoopWithTooManyJumpStatements:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$for</ID>
-    <ID>MagicNumber:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$3</ID>
-    <ID>MagicNumber:OpenVoxCompletionContext.kt$OpenVoxCompletionContext$400</ID>
     <ID>MagicNumber:OpenVoxCompletionContributor.kt$ArrowInsertHandler$4</ID>
     <ID>MagicNumber:OpenVoxConfigurable.kt$OpenVoxConfigurable$40</ID>
     <ID>MagicNumber:OpenVoxKnowledge.kt$OpenVoxKnowledge$3</ID>
