@@ -38,16 +38,16 @@ The project is a maintained fork of the Apache-2.0 OpenVox Language plugin by Bl
 
 ## Language Support
 
-| Area       | Support                                                                                                                                                                 |
-|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| File types | `.pp` manifests, `.epp` templates                                                                                                                                       |
-| Runtimes   | Puppet 8, OpenVox 8, OpenVox 9 prereleases (checked against 9.0.0-rc1); see [COMPATIBILITY.md](COMPATIBILITY.md)                                             |
-| Syntax     | Parameterised data types such as `Optional[Variant[String[1], Enum['a','b']]]`, `Sensitive`, `Init`, type aliases, Puppet-language functions, lambdas, heredocs, EPP tags |
-| Completion | Attributes and values, data types, resource types, facts, built-in and project functions, variables in scope                                                           |
-| Navigation | Declarations, find usages, rename, Go to Class and Go to Symbol, template and file references, Hiera gutter links                                                       |
-| Formatting | Indentation and arrow alignment for resource bodies, hashes and selectors                                                                                               |
-| Inspections| Unknown function, unknown attribute, unresolved variable, unused parameter, legacy fact with quick fix                                                                  |
-| Validation | Optional `puppet parser validate` and `puppet-lint` integration                                                                                                         |
+| Area        | Support                                                                                                                                                                   |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| File types  | `.pp` manifests, `.epp` templates                                                                                                                                         |
+| Runtimes    | Puppet 8, OpenVox 8, OpenVox 9 prereleases (checked against 9.0.0-rc1); see [COMPATIBILITY.md](COMPATIBILITY.md)                                                          |
+| Syntax      | Parameterised data types such as `Optional[Variant[String[1], Enum['a','b']]]`, `Sensitive`, `Init`, type aliases, Puppet-language functions, lambdas, heredocs, EPP tags |
+| Completion  | Attributes and values, data types, resource types, facts, built-in and project functions, variables in scope                                                              |
+| Navigation  | Declarations, find usages, rename, Go to Class and Go to Symbol, template and file references, Hiera gutter links                                                         |
+| Formatting  | Indentation and arrow alignment for resource bodies, hashes and selectors                                                                                                 |
+| Inspections | Unknown function, unknown attribute, unresolved variable, unused parameter, legacy fact with quick fix                                                                    |
+| Validation  | Optional `puppet parser validate` and `puppet-lint` integration                                                                                                           |
 
 ## Compatibility
 
