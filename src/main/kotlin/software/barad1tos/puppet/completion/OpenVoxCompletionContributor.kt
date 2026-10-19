@@ -162,9 +162,11 @@ private const val ARROW = " => "
 private val insertArrow =
     InsertHandler<LookupElement> { context, _ ->
         val document = context.document
-        val tail = document.charsSequence.subSequence(context.tailOffset, document.textLength).take(ARROW.length)
+        // tailOffset is a range marker that moves past text inserted at it, so pin the offset first.
+        val nameEnd = context.tailOffset
+        val tail = document.charsSequence.subSequence(nameEnd, document.textLength).take(ARROW.length)
         if (!tail.trimStart().startsWith("=>")) {
-            document.insertString(context.tailOffset, ARROW)
-            context.editor.caretModel.moveToOffset(context.tailOffset + ARROW.length)
+            document.insertString(nameEnd, ARROW)
+            context.editor.caretModel.moveToOffset(nameEnd + ARROW.length)
         }
     }

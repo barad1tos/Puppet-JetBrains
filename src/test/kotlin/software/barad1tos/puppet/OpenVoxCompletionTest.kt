@@ -70,6 +70,22 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
         assertEquals("class", typeTexts["site::web"])
     }
 
+    fun testResourceTypesOfferedAtStatementStart() {
+        myFixture.addFileToProject("site/manifests/vhost.pp", "define site::vhost () { }")
+        val items = completions("fil<caret> { '/etc/motd': }")
+        assertOffers(items, "file")
+    }
+
+    fun testAttributeNameCompletionInsertsArrow() {
+        myFixture.configureByText("site.pp", "file { '/etc/motd':\n  ensu<caret>\n}")
+        myFixture.completeBasic()
+        myFixture.lookup?.let { lookup ->
+            lookup.currentItem = lookup.items.first { it.lookupString == "ensure" }
+            myFixture.finishLookup(com.intellij.codeInsight.lookup.Lookup.NORMAL_SELECT_CHAR)
+        }
+        myFixture.checkResult("file { '/etc/motd':\n  ensure => <caret>\n}")
+    }
+
     fun testTypeAliasesOfferedWhereATypeIsExpected() {
         myFixture.addFileToProject("profile/manifests/types.pp", "type Profile::Port = Integer[1, 65535]")
         val items = completions("class demo (Prof<caret>) { }")
@@ -82,7 +98,7 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
                 """
                 class demo (String ${'$'}greeting = 'hi') {
                   ${'$'}target = '/etc/motd'
-                  notify { 'x': message => ${'$'}<caret> }
+                  notify { 'x': message => $<caret> }
                 }
                 """.trimIndent(),
             )
