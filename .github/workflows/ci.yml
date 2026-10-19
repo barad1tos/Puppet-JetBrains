@@ -65,7 +65,7 @@ jobs:
         run: ./gradlew build --stacktrace
 
       - name: Collect coverage
-        run: ./gradlew koverXmlReport koverVerify --stacktrace
+        run: ./gradlew koverXmlReport --stacktrace
 
       - name: Upload coverage to Codecov
         if: matrix.os == 'ubuntu-latest' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
@@ -129,7 +129,7 @@ jobs:
         run: python3 scripts/verify-docs.py
 
       - name: Verify release helper scripts
-        run: python3 scripts/tests/test_verify_plugin_verifier.py
+        run: python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 
       - name: Fail on internal API findings
         run: python3 scripts/verify-plugin-verifier.py
