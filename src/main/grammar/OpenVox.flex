@@ -1,4 +1,4 @@
-package net.blendbyte.openvox.lexer;
+package software.barad1tos.puppet.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
@@ -6,7 +6,7 @@ import com.intellij.psi.TokenType;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static net.blendbyte.openvox.psi.OpenVoxTypes.*;
+import static software.barad1tos.puppet.psi.OpenVoxTypes.*;
 
 %%
 
