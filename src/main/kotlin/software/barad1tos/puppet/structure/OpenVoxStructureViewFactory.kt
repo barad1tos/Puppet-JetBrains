@@ -47,7 +47,8 @@ private class OpenVoxStructureElement(
     SortableTreeElement {
     override fun getValue(): Any = element
 
-    // Navigatable.navigate is override-only API since 2026.3; the platform helper performs the navigation.
+    // Plugin Verifier against IU-263 (2026.3): "Override-only method com.intellij.pom.Navigatable.navigate(boolean)
+    // is invoked"; the platform helper performs the navigation instead.
     override fun navigate(requestFocus: Boolean) = PsiNavigateUtil.navigate(element, requestFocus)
 
     override fun canNavigate(): Boolean = (element as? Navigatable)?.canNavigate() ?: false

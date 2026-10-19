@@ -10,6 +10,6 @@ When external validation is enabled (it is on by default), the plugin writes the
 
 The plugin does not operate external analytics, telemetry, advertising, or tracking services.
 
-Plugin installation, updates and Marketplace account data are handled by JetBrains IDEs and JetBrains Marketplace and are governed by JetBrains' own privacy policies.
+Plugin installation and updates are handled by JetBrains IDEs; once the plugin is listed on JetBrains Marketplace, Marketplace account data is handled by JetBrains and governed by its own privacy policies.
 
-Issue reports, support requests, Marketplace reviews, and other user-submitted messages are handled through GitHub and JetBrains Marketplace. Those services are governed by their own privacy policies.
+Issue reports, support requests, and, once listed, Marketplace reviews and other user-submitted messages are handled through GitHub and JetBrains Marketplace. Those services are governed by their own privacy policies.

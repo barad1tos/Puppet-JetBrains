@@ -30,7 +30,7 @@ The project is a maintained fork of the Apache-2.0 OpenVox Language plugin by Bl
 ## What you get today
 
 - **Manifests as an IDE language, not plain text** — syntax highlighting with a configurable colour scheme, brace matching, folding, live templates and a structure view for `.pp` and `.epp` files.
-- **Navigation for real modules** — go to the declaration of a class, defined type, function, type alias, parameter or variable; find usages; rename; Go to Class and Go to Symbol; jump from `epp()`, `template()` and `source =>` to the file they name; Hiera gutter links for matching keys in `data/*.yaml`.
+- **Navigation for real modules** — go to the declaration of a class, defined type, function, type alias, parameter or variable; find usages; rename; Go to Class and Go to Symbol; jump from `epp()`, `template()` and `source =>` to the file they name; Hiera gutter links for matching keys in `data/**/*.yaml` and `*.yml`.
 - **Data-driven completion** — resource attributes and their allowed values, data types and type aliases, resource types, fact keys inside `$facts[...]`, built-in and project functions, and variables in scope, with quick documentation and OpenVox 8/9 compatibility notes.
 - **Formatting that follows the style guide** — two-space indentation and configurable alignment of resource, hash and selector arrows, on its own code style page.
 - **Inspections with quick fixes** — unknown function, unknown attribute, unresolved variable, unused parameter, and legacy top-scope facts rewritten as `$facts[...]`.
@@ -55,7 +55,7 @@ The project is a maintained fork of the Apache-2.0 OpenVox Language plugin by Bl
 - Maximum: none — `until-build` is open
 - Works in every IntelliJ Platform IDE; depends only on `com.intellij.modules.platform`
 - JVM target: 21
-- Cannot be installed alongside the original OpenVox Language plugin (`net.blendbyte.openvox-intellij`), because both register the same language and file types; uninstall it first
+- Cannot be installed alongside the original OpenVox Language plugin (`net.blendbyte.openvox-intellij`, or its early build `net.blendbyte.openvox`), because both register the same language and file types; uninstall it first
 
 ## Installation
 
@@ -128,7 +128,7 @@ The current maintained fork and modifications are Copyright 2026 Roman Borodavki
 
 - Maintained fork, release pipeline and verification coverage by Roman Borodavkin and contributors
 - Original OpenVox Language plugin by Blendbyte GmbH, distributed under the Apache License 2.0
-- Grammar and lexer written from the OpenVox reference implementation by the OpenVox project (Vox Pupuli)
+- Grammar and lexer written by Blendbyte GmbH from the OpenVox reference implementation (OpenVox project, Vox Pupuli)
 - JFlex skeleton from IntelliJ IDEA Community Edition and the IntelliJ Platform SDK by JetBrains
 
 ## License

@@ -12,7 +12,8 @@
         <li><b>Editing</b> - syntax highlighting with a configurable colour scheme, brace
             matching, folding, live templates and a structure view.</li>
         <li><b>Formatting</b> - aligns the <code>=&gt;</code> of every attribute in a resource
-            body, hash and selector, as the style guide requires, with its own code style page.</li>
+            body, hash and selector by default, as the style guide recommends; each alignment is a
+            code style option.</li>
         <li><b>Navigation</b> - go to the declaration of a class, defined type, function, type
             alias, parameter or variable; find usages; rename; Go to Class and Go to Symbol;
             jump from <code>epp()</code>, <code>template()</code> and <code>source =&gt;</code>
@@ -42,7 +43,7 @@
         <li>[Change] The plugin is now published as Puppet Tools (<code>software.barad1tos.puppet-tools</code>) by Roman Borodavkin, a maintained fork of the OpenVox Language plugin by Blendbyte GmbH. The original plugin IDs are marked incompatible because both plugins register the same language and file types; uninstall OpenVox Language before installing Puppet Tools.</li>
         <li>[Change] Settings, code style, colour scheme and inspection pages are grouped under Puppet instead of OpenVox / Puppet; the <code>.pp</code> file type is described as a Puppet manifest.</li>
         <li>[Change] New neutral plugin and file icons replace the original logo.</li>
-        <li>[Change] Releases are built, verified and published from GitHub Actions on <code>v*</code> tags, with CodeQL, dependency updates, static analysis and coverage reporting on every change.</li>
+        <li>[Change] Releases are built, verified and published from GitHub Actions on <code>v*</code> tags; every pull request and push to <code>main</code> runs the build, tests, CodeQL, static analysis and coverage reporting, and Dependabot proposes dependency updates weekly.</li>
       </ul>
     ]]></change-notes>
 
