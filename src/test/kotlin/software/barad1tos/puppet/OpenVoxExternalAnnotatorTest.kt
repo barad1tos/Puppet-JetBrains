@@ -1,12 +1,18 @@
 package software.barad1tos.puppet
 
 import com.intellij.codeInsight.daemon.impl.HighlightInfo
+import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.openapi.progress.EmptyProgressIndicator
+import com.intellij.openapi.progress.ProcessCanceledException
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.intellij.util.concurrency.AppExecutorUtil
 import software.barad1tos.puppet.annotator.OpenVoxToolOutput
+import software.barad1tos.puppet.annotator.runTool
 import software.barad1tos.puppet.settings.OpenVoxSettings
 import java.io.File
 import java.nio.file.Files
+import java.util.concurrent.TimeUnit
 
 class OpenVoxExternalAnnotatorTest : BasePlatformTestCase() {
     private lateinit var tools: File
@@ -102,6 +108,18 @@ class OpenVoxExternalAnnotatorTest : BasePlatformTestCase() {
         assertEquals(listOf("puppet-lint: indentation of => is not properly aligned"), infos.map { it.description })
         assertEquals(HighlightSeverity.WARNING, infos.single().severity)
         assertEquals(1 to 2, infos.single().position())
+    }
+
+    fun testCancelledPassStopsTheToolPromptly() {
+        val slowTool = script("slow-puppet", "sleep 30")
+        val indicator = EmptyProgressIndicator()
+        AppExecutorUtil.getAppScheduledExecutorService().schedule({ indicator.cancel() }, 300, TimeUnit.MILLISECONDS)
+        val started = System.nanoTime()
+
+        assertThrows(ProcessCanceledException::class.java) { runTool(GeneralCommandLine(slowTool), indicator) }
+
+        val elapsedMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started)
+        assertTrue("the cancelled tool kept running for $elapsedMs ms", elapsedMs < 5_000)
     }
 
     fun testMissingValidatorShowsNoErrorsInsteadOfFailing() {

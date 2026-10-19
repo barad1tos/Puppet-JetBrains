@@ -2,17 +2,22 @@ package software.barad1tos.puppet.annotator
 
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.configurations.GeneralCommandLine
-import com.intellij.execution.util.ExecUtil
+import com.intellij.execution.process.CapturingProcessHandler
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.ExternalAnnotator
+import com.intellij.openapi.diagnostic.logger
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.progress.EmptyProgressIndicator
+import com.intellij.openapi.progress.ProgressIndicator
+import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiFile
 import software.barad1tos.puppet.settings.OpenVoxSettings
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
+import java.util.concurrent.ConcurrentHashMap
 
 data class OpenVoxAnnotatorInput(
     val text: String,
@@ -82,7 +87,7 @@ class OpenVoxExternalAnnotator : ExternalAnnotator<OpenVoxAnnotatorInput, List<O
         executable: String,
         path: String,
     ): List<OpenVoxExternalMessage> =
-        run(GeneralCommandLine(executable, "parser", "validate", path))
+        runTool(GeneralCommandLine(executable, "parser", "validate", path))
             ?.let(OpenVoxToolOutput::parseValidate)
             .orEmpty()
 
@@ -90,17 +95,10 @@ class OpenVoxExternalAnnotator : ExternalAnnotator<OpenVoxAnnotatorInput, List<O
         executable: String,
         path: String,
     ): List<OpenVoxExternalMessage> =
-        run(GeneralCommandLine(executable, "--log-format", OpenVoxToolOutput.LINT_LOG_FORMAT, path))
-            ?.let(OpenVoxToolOutput::parseLint)
+        runTool(
+            GeneralCommandLine(executable, "--log-format", OpenVoxToolOutput.LINT_LOG_FORMAT, path),
+        )?.let(OpenVoxToolOutput::parseLint)
             .orEmpty()
-
-    private fun run(command: GeneralCommandLine): String? =
-        try {
-            val result = ExecUtil.execAndGetOutput(command.withRedirectErrorStream(true), TIMEOUT_MS)
-            result.stdout
-        } catch (_: ExecutionException) {
-            null
-        }
 
     private fun deleteQuietly(path: Path) {
         try {
@@ -109,8 +107,45 @@ class OpenVoxExternalAnnotator : ExternalAnnotator<OpenVoxAnnotatorInput, List<O
             // Best effort: a leftover file in the system temp directory is harmless.
         }
     }
+}
 
-    private companion object {
-        const val TIMEOUT_MS = 10_000
+private const val TOOL_TIMEOUT_MS = 10_000
+
+private val LOG = logger<OpenVoxExternalAnnotator>()
+
+/** Executables whose failure is already in the log; the annotator runs on every edit, so each is reported once. */
+private val reportedTools: MutableSet<String> = ConcurrentHashMap.newKeySet()
+
+/**
+ * Runs [command] for at most [TOOL_TIMEOUT_MS], killing it as soon as [indicator] is cancelled.
+ * Returns its combined output, or null when the tool cannot start or times out;
+ * either failure is logged once per executable.
+ */
+internal fun runTool(
+    command: GeneralCommandLine,
+    indicator: ProgressIndicator = ProgressManager.getGlobalProgressIndicator() ?: EmptyProgressIndicator(),
+): String? {
+    val output =
+        try {
+            CapturingProcessHandler(command.withRedirectErrorStream(true))
+                .runProcessWithProgressIndicator(indicator, TOOL_TIMEOUT_MS)
+        } catch (exception: ExecutionException) {
+            reportFailure(command, exception.message ?: exception.javaClass.simpleName)
+            return null
+        }
+    indicator.checkCanceled()
+    if (output.isTimeout) {
+        reportFailure(command, "no answer within $TOOL_TIMEOUT_MS ms")
+        return null
+    }
+    return output.stdout
+}
+
+private fun reportFailure(
+    command: GeneralCommandLine,
+    reason: String,
+) {
+    if (reportedTools.add(command.exePath)) {
+        LOG.warn("${command.exePath} did not run ($reason); its findings are missing from the editor")
     }
 }
