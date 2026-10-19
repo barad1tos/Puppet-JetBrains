@@ -33,9 +33,9 @@ class OpenVoxFoldingBuilder : FoldingBuilderEx(), DumbAware {
             val type = cursor?.elementType ?: break
             if (type == T.HD_TEXT && bodyStart == null) bodyStart = cursor
             if (type == T.HD_END && bodyStart != null) {
-                val range = TextRange(bodyStart.startOffset, cursor!!.textRange.endOffset)
+                val range = TextRange(bodyStart.startOffset, cursor.textRange.endOffset)
                 if (spansLines(range, document)) {
-                    descriptors += FoldingDescriptor(cursor!!.treeParent ?: cursor!!, range, null, "…")
+                    descriptors += FoldingDescriptor(cursor.treeParent ?: cursor, range, null, "…")
                 }
                 bodyStart = null
             }

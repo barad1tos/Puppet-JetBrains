@@ -58,8 +58,8 @@ internal object OpenVoxInspectionSupport {
         if (OpenVoxKnowledge.functions.containsKey(bare)) return true
         if (bare in STATEMENT_CALLS) return true
         val project = element.project
-        if (OpenVoxResolver.find(project, OpenVoxDeclarationKind.FUNCTION, bare).isNotEmpty()) return true
-        return OpenVoxRubyFunctionIndex.exists(project, bare)
+        return OpenVoxResolver.find(project, OpenVoxDeclarationKind.FUNCTION, bare).isNotEmpty() ||
+            OpenVoxRubyFunctionIndex.exists(project, bare)
     }
 
     private val STATEMENT_CALLS = setOf(

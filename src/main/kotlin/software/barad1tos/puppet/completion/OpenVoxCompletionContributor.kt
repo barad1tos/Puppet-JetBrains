@@ -128,7 +128,7 @@ private object OpenVoxCompletionProvider : CompletionProvider<CompletionParamete
 
     private fun addVariables(parameters: CompletionParameters, result: CompletionResultSet) {
         OpenVoxScope.declarationsVisibleFrom(parameters.position)
-            .mapNotNull { it.name?.let { name -> "\$$name" } }
+            .mapNotNull { it.name?.let { name -> "$$name" } }
             .distinct()
             .forEach { result.addElement(LookupElementBuilder.create(it).withTypeText("variable")) }
     }

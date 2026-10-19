@@ -25,7 +25,7 @@ class OpenVoxLegacyFactInspection : LocalInspectionTool() {
 
                 holder.registerProblem(
                     element,
-                    "Legacy fact '${element.text}'; use \$$replacement",
+                    "Legacy fact '${element.text}'; use $$replacement",
                     ProblemHighlightType.WEAK_WARNING,
                     UseStructuredFactFix(replacement),
                 )
@@ -37,11 +37,11 @@ private class UseStructuredFactFix(private val replacement: String) : LocalQuick
 
     override fun getFamilyName(): String = "Use the structured fact"
 
-    override fun getName(): String = "Replace with \$$replacement"
+    override fun getName(): String = "Replace with $$replacement"
 
     override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
         val element = descriptor.psiElement ?: return
-        val file = OpenVoxElementFactory.createFile(project, "\$x = \$$replacement")
+        val file = OpenVoxElementFactory.createFile(project, "\$x = $$replacement")
         val assignment = PsiTreeUtil.findChildrenOfType(file, PsiElement::class.java)
             .firstOrNull { it.node?.elementType == T.ASSIGN_EXPR } ?: return
         val value = assignment.lastChild ?: return

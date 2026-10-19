@@ -56,7 +56,7 @@ object OpenVoxCompletionContext {
                 if (type == T.LBRACE &&
                     (ownerType == T.IDENTIFIER || ownerType == T.BARE_WORD || ownerType == T.CLASSREF)
                 ) {
-                    val resourceType = owner!!.text.removePrefix("::").lowercase()
+                    val resourceType = owner.text.removePrefix("::").lowercase()
                     return when (decided) {
                         is OpenVoxCompletionPlace.AttributeValue ->
                             OpenVoxCompletionPlace.AttributeValue(resourceType, attributeName.orEmpty())
@@ -100,7 +100,7 @@ object OpenVoxCompletionContext {
 
     private fun factKey(leaves: List<PsiElement>): OpenVoxCompletionPlace? {
         val bracket = leaves.indexOfFirst { it.node?.elementType == T.LBRACK }
-        if (bracket < 0 || bracket > 1) return null
+        if (bracket !in 0..1) return null
         var index = bracket + 1
         val path = mutableListOf<String>()
         while (leaves.getOrNull(index)?.node?.elementType == T.RBRACK) {

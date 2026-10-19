@@ -15,7 +15,7 @@ object OpenVoxElementFactory {
 
     fun renameToken(identifier: PsiElement, name: String): PsiElement {
         val text = when (identifier.node.elementType) {
-            T.VARIABLE -> "\$${name.removePrefix("$")}"
+            T.VARIABLE -> "$${name.removePrefix("$")}"
             T.SQ_STRING -> "'${name.replace("\\", "\\\\").replace("'", "\\'")}'"
             T.DQ_TEXT -> name.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")
             else -> name
