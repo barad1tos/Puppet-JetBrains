@@ -8,7 +8,6 @@
     <ID>MagicNumber:OpenVoxKnowledge.kt$OpenVoxKnowledge$3</ID>
     <ID>MagicNumber:OpenVoxKnowledge.kt$OpenVoxKnowledge$4</ID>
     <ID>MagicNumber:OpenVoxLexerAdapter.kt$OpenVoxLexerAdapter$15</ID>
-    <ID>MagicNumber:OpenVoxProjectReferenceContributor.kt$FilePathProvider$3</ID>
     <ID>MagicNumber:OpenVoxReferenceContributor.kt$QuotedClassProvider$3</ID>
     <ID>MagicNumber:OpenVoxHieraLineMarkerProvider.kt$OpenVoxHieraLineMarkerProvider$20</ID>
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$assertTrue("${failures.size}/${files.size} .$extension files failed (allowed: $allowed)", failures.size &lt;= allowed)</ID>
@@ -16,7 +15,6 @@
     <ID>MaxLineLength:CorpusTest.kt$CorpusParsingTest$val paths = requireNotNull(System.getProperty("openvox.corpus")) { "Set -Dopenvox.corpus to run external corpus tests" }</ID>
     <ID>MaxLineLength:OpenVoxBlock.kt$OpenVoxBlock$T.RESOURCE_BODY -> if (childType == T.ATTRIBUTE_OPERATIONS) Indent.getNormalIndent() else Indent.getNoneIndent()</ID>
     <ID>MaxLineLength:OpenVoxLexerAdapter.kt$OpenVoxLexerAdapter$override</ID>
-    <ID>MaxLineLength:OpenVoxProjectReferenceContributor.kt$FilePathProvider$val quoted = element.firstChild?.takeIf { it.node?.elementType == T.SQ_STRING } ?: return PsiReference.EMPTY_ARRAY</ID>
     <ID>MaxLineLength:OpenVoxReferenceContributor.kt$OpenVoxReferenceContributor$registrar.registerReferenceProvider(PlatformPatterns.psiElement(OpenVoxDqString::class.java), QuotedClassProvider)</ID>
     <ID>MaxLineLength:OpenVoxReferenceContributor.kt$OpenVoxReferenceContributor$registrar.registerReferenceProvider(PlatformPatterns.psiElement(OpenVoxLiteralExpr::class.java), QuotedClassProvider)</ID>
     <ID>MaxLineLength:OpenVoxReferenceContributor.kt$QuotedClassProvider$return arrayOf(OpenVoxDeclarationReference(element, TextRange(1, text.lastIndex), listOf(OpenVoxDeclarationKind.CLASS)))</ID>
