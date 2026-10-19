@@ -1,5 +1,5 @@
 [versions]
-# Static analysis and coverage; build-time only, never shipped in the plugin ZIP.
+# Build-time plugins (static analysis, coverage, grammar generation); never shipped in the plugin ZIP.
 detekt = "1.23.8"
 ktlint-plugin = "14.2.0"
 kover = "0.9.8"

@@ -1,6 +1,8 @@
 # OpenVox 8 and 9 compatibility
 
-The plugin supports both versions with one parser and shared completion data. OpenVox 9 support is provisional through [9.0.0-rc1, released September 4, 2026](https://github.com/OpenVoxProject/openvox/releases/tag/9.0.0-rc1). Recheck the final release before claiming stable 9 support.
+The plugin supports both versions with one parser and shared completion data. OpenVox 8 is the community fork of Puppet 8 and inherits its manifest grammar, so Puppet 8 manifests are parsed by the same grammar; external validation accepts a `puppet` executable as well as `openvox`.
+
+ OpenVox 9 support is provisional through [9.0.0-rc1, released September 4, 2026](https://github.com/OpenVoxProject/openvox/releases/tag/9.0.0-rc1). Recheck the final release before claiming stable 9 support.
 
 ## What was compared
 
@@ -13,7 +15,7 @@ Source review on September 14, 2026 compared OpenVox's `8.x` branch at `0ae463dd
 
 These findings support sharing the editor implementation. They do not imply that a catalog behaves identically on both runtimes.
 
-Validation passed: 78 JVM tests, four generator tests, and all 26 manifests plus two EPP templates from the two revisions' `examples/` and `benchmarks/evaluations/manifests/` directories. This checks the plugin against upstream source fixtures; it is not a live agent or server integration test.
+Validation passed at that date: 78 JVM tests, four generator tests, and all 26 manifests plus two EPP templates from the two revisions' `examples/` and `benchmarks/evaluations/manifests/` directories. This checks the plugin against upstream source fixtures; it is not a live agent or server integration test.
 
 ## Changes that affect manifests and modules
 
@@ -34,4 +36,4 @@ The IDE does not infer an OpenVox version or reject version-specific function ar
 
 Before updating the supported 9 prerelease or declaring stable support, compare the parser and generated inventory again, run the plugin tests and corpus checks, and update this record. Keep 8 as the generated-data baseline so 8-only signatures remain documented.
 
-GitHub Actions builds, tests and verifies every pull request and every push to `main`, and the release workflow publishes a tagged `v*` build as a GitHub Release; publishing to JetBrains Marketplace runs from the same workflow once a Marketplace token is configured.
+GitHub Actions builds, tests and verifies every pull request targeting `main` and every push to `main`, and the release workflow publishes a tagged `v*` build as a GitHub Release; publishing to JetBrains Marketplace runs from the same workflow once a Marketplace token is configured.

@@ -36,8 +36,8 @@ Please include:
 
 ## What to Expect
 
-- Acknowledgment within 7 days.
-- Assessment and response within 30 days.
+- Target: acknowledgment within 7 days.
+- Target: assessment and response within 30 days (best effort; this is a solo-maintained project).
 - For confirmed issues: a fix in the next practical release.
 - Credit in the changelog unless you prefer anonymity.
 

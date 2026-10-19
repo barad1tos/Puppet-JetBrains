@@ -1,4 +1,4 @@
-# detekt ruleset, shared with the sibling plugins AppleScript-JetBrains and ayu-jetbrains.
+# detekt ruleset, derived from the sibling plugins AppleScript-JetBrains and ayu-jetbrains.
 # Source-only configuration: no type-resolution classpath, because detekt 1.23.x bundles an
 # older Kotlin compiler than the project uses. buildUponDefaultConfig=true in build.gradle.kts
 # layers these overrides on top of detekt's bundled defaults.
