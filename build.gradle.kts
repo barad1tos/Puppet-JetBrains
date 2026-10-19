@@ -11,6 +11,9 @@ plugins {
 
 val platformVersion: String by project
 
+group = providers.gradleProperty("pluginGroup").get()
+version = providers.gradleProperty("pluginVersion").get()
+
 repositories {
     mavenCentral()
     maven("https://cache-redirector.jetbrains.com/intellij-dependencies")
@@ -34,15 +37,15 @@ kotlin {
 
 intellijPlatform {
     pluginConfiguration {
-        id = "net.blendbyte.openvox-intellij"
-        name = "OpenVox Language"
-        version = project.version.toString()
+        id = "software.barad1tos.puppet-tools"
+        name = providers.gradleProperty("pluginName")
+        version = providers.gradleProperty("pluginVersion")
         vendor {
-            name = "Blendbyte GmbH"
-            url = "https://github.com/blendbyte/openvox-intellij"
+            name = "Roman Borodavkin"
+            url = "https://github.com/barad1tos/Puppet-JetBrains"
         }
         ideaVersion {
-            sinceBuild = "252"
+            sinceBuild = providers.gradleProperty("pluginSinceBuild")
             untilBuild = provider { null }
         }
     }

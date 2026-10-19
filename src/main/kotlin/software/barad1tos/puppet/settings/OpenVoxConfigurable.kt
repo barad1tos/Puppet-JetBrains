@@ -7,7 +7,7 @@ import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.columns
 import com.intellij.ui.dsl.builder.panel
 
-class OpenVoxConfigurable : BoundConfigurable("OpenVox / Puppet") {
+class OpenVoxConfigurable : BoundConfigurable("Puppet") {
 
     override fun createPanel(): DialogPanel {
         val settings = OpenVoxSettings.getInstance()

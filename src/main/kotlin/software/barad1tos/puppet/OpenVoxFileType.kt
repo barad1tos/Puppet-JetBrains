@@ -4,7 +4,7 @@ import com.intellij.openapi.fileTypes.LanguageFileType
 
 object OpenVoxFileType : LanguageFileType(OpenVoxLanguage) {
     override fun getName() = "OpenVox"
-    override fun getDescription() = "OpenVox / Puppet manifest"
+    override fun getDescription() = "Puppet manifest"
     override fun getDefaultExtension() = "pp"
     override fun getIcon() = OpenVoxIcons.FILE
 }

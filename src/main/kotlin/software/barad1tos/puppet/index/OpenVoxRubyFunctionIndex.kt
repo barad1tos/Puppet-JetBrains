@@ -31,7 +31,7 @@ class OpenVoxRubyFunctionIndex : ScalarIndexExtension<String>() {
     }
 
     companion object {
-        val KEY: ID<String, Void> = ID.create("net.blendbyte.openvox-intellij.rubyFunctions")
+        val KEY: ID<String, Void> = ID.create("software.barad1tos.puppet-tools.rubyFunctions")
 
         private val MODERN = Regex("""create_function\(\s*:'?([\w:]+)'?""")
         private val LEGACY = Regex("""newfunction\(\s*:(\w+)""")

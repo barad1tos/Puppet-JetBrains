@@ -3,7 +3,7 @@ package software.barad1tos.puppet
 import com.intellij.lang.Language
 
 object OpenVoxLanguage : Language("OpenVox") {
-    override fun getDisplayName() = "OpenVox / Puppet"
+    override fun getDisplayName() = "Puppet"
     override fun isCaseSensitive() = true
 }
 
