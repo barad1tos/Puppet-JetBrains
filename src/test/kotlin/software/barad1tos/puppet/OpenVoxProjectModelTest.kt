@@ -56,6 +56,24 @@ class OpenVoxProjectModelTest : BasePlatformTestCase() {
         assertTrue(myFixture.findAllGutters().isEmpty())
     }
 
+    fun testHieraIndexIgnoresBlockScalarContent() {
+        myFixture.addFileToProject(
+            "data/common.yaml",
+            "profile::agent::motd: |\n  profile::agent::ensure: running\n\n  more text\nprofile::agent::other: x\n",
+        )
+        myFixture.configureByText("init.pp", "class profile::agent (String \$ensure = 'running') { }")
+        assertTrue(myFixture.findAllGutters().isEmpty())
+    }
+
+    fun testHieraIndexResumesAfterBlockScalar() {
+        myFixture.addFileToProject(
+            "data/common.yaml",
+            "profile::agent::motd: >-\n  folded text\nprofile::agent::ensure: running\n",
+        )
+        myFixture.configureByText("init.pp", "class profile::agent (String \$ensure = 'running') { }")
+        assertTrue(myFixture.findAllGutters().any { it.tooltipText?.contains("profile::agent::ensure") == true })
+    }
+
     fun testHieraIndexTracksEditedKeys() {
         val data = myFixture.addFileToProject("data/common.yaml", "profile::agent::ensure: running\n")
         myFixture.configureByText("init.pp", "class profile::agent (String \$ensure = 'running') { }")
