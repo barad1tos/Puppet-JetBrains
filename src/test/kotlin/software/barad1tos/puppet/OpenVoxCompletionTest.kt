@@ -70,10 +70,17 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
         assertEquals("class", typeTexts["site::web"])
     }
 
-    fun testResourceTypesOfferedAtStatementStart() {
+    fun testResourceTypesOfferedAtResourceStart() {
         myFixture.addFileToProject("site/manifests/vhost.pp", "define site::vhost () { }")
-        val items = completions("fil<caret> { '/etc/motd': }")
-        assertOffers(items, "file")
+        myFixture.configureByText("site.pp", "s<caret> { 'nginx': }")
+        val typeTexts =
+            myFixture.completeBasic().orEmpty().associate { item ->
+                val presentation = LookupElementPresentation()
+                item.renderElement(presentation)
+                item.lookupString to presentation.typeText
+            }
+        assertEquals("resource type", typeTexts["service"])
+        assertEquals("defined type", typeTexts["site::vhost"])
     }
 
     fun testAttributeNameCompletionInsertsArrow() {
@@ -84,6 +91,16 @@ class OpenVoxCompletionTest : BasePlatformTestCase() {
             myFixture.finishLookup(com.intellij.codeInsight.lookup.Lookup.NORMAL_SELECT_CHAR)
         }
         myFixture.checkResult("file { '/etc/motd':\n  ensure => <caret>\n}")
+    }
+
+    fun testAttributeNameCompletionKeepsAnExistingArrow() {
+        myFixture.configureByText("site.pp", "file { '/etc/motd':\n  ensu<caret> => file,\n}")
+        myFixture.completeBasic()
+        myFixture.lookup?.let { lookup ->
+            lookup.currentItem = lookup.items.first { it.lookupString == "ensure" }
+            myFixture.finishLookup(com.intellij.codeInsight.lookup.Lookup.NORMAL_SELECT_CHAR)
+        }
+        myFixture.checkResult("file { '/etc/motd':\n  ensure<caret> => file,\n}")
     }
 
     fun testTypeAliasesOfferedWhereATypeIsExpected() {

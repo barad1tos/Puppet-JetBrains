@@ -30,6 +30,13 @@ class OpenVoxCompletionContextTest : BasePlatformTestCase() {
         )
     }
 
+    fun testAttributeValueAfterEarlierAttributes() {
+        assertEquals(
+            OpenVoxCompletionPlace.AttributeValue("file", "mode"),
+            placeAt("file { '/etc/motd':\n  ensure => file,\n  mode => <caret>\n}"),
+        )
+    }
+
     fun testAttributeValue() {
         assertEquals(
             OpenVoxCompletionPlace.AttributeValue("service", "ensure"),

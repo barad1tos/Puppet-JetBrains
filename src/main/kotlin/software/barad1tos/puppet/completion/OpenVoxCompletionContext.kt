@@ -55,7 +55,7 @@ object OpenVoxCompletionContext {
         data object Name : Pending
     }
 
-    /** The unmatched opening bracket around the caret, as an index into the leaves before it. */
+    /** The unmatched opening bracket around the caret, as an index into the leaves before it, nearest first. */
     private data class Enclosing(
         val index: Int,
         val pending: Pending?,

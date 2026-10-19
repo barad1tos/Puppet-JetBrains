@@ -106,7 +106,7 @@ class OpenVoxExternalAnnotator : ExternalAnnotator<OpenVoxAnnotatorInput, List<O
         try {
             Files.deleteIfExists(path)
         } catch (_: IOException) {
-            // A leftover temp file is harmless; the OS temp cleaner reclaims it.
+            // Best effort: a leftover file in the system temp directory is harmless.
         }
     }
 

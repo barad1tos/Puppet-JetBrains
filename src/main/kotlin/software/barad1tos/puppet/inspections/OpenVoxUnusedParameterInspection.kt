@@ -11,7 +11,7 @@ import software.barad1tos.puppet.resolve.OpenVoxReferenceContext
 import software.barad1tos.puppet.resolve.OpenVoxScope
 import software.barad1tos.puppet.psi.OpenVoxTypes as T
 
-/** Declarations whose parameters are only visible inside their own body. */
+/** Scopes whose parameters are visible only inside their own body; class parameters are reachable as `$cls::param`. */
 private val LOCAL_SCOPES = TokenSet.create(T.DEFINE_DEFINITION, T.FUNCTION_DEFINITION, T.LAMBDA, T.PLAN_DEFINITION)
 
 class OpenVoxUnusedParameterInspection : LocalInspectionTool() {
