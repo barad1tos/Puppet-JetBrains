@@ -1,0 +1,18 @@
+[versions]
+# Static analysis and coverage; build-time only, never shipped in the plugin ZIP.
+detekt = "1.23.8"
+ktlint-plugin = "14.2.0"
+kover = "0.9.8"
+grammarkit = "2022.3.2.2"
+
+# Test
+junit4 = "4.13.2"
+
+[libraries]
+junit4 = { module = "junit:junit", version.ref = "junit4" }
+
+[plugins]
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+grammarkit = { id = "org.jetbrains.grammarkit", version.ref = "grammarkit" }
