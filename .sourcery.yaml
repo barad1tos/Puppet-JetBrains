@@ -1,0 +1,5 @@
+ignore:
+  - build/**
+  - .gradle/**
+  - .kotlin/**
+  - .intellijPlatform/**

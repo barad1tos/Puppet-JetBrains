@@ -36,6 +36,15 @@
       OpenVox Language plugin by Blendbyte GmbH. It is not affiliated with, endorsed by or
       sponsored by Perforce Software (Puppet), Vox Pupuli (OpenVox) or Blendbyte GmbH.</p>
     ]]></description>
+    <change-notes><![CDATA[
+      <h3>0.3.0</h3>
+      <ul>
+        <li>[Change] The plugin is now published as Puppet Tools (<code>software.barad1tos.puppet-tools</code>) by Roman Borodavkin, a maintained fork of the OpenVox Language plugin by Blendbyte GmbH. The original plugin IDs are marked incompatible because both plugins register the same language and file types; uninstall OpenVox Language before installing Puppet Tools.</li>
+        <li>[Change] Settings, code style, colour scheme and inspection pages are grouped under Puppet instead of OpenVox / Puppet; the <code>.pp</code> file type is described as a Puppet manifest.</li>
+        <li>[Change] New neutral plugin and file icons replace the original logo.</li>
+        <li>[Change] Releases are built, verified and published from GitHub Actions on <code>v*</code> tags, with CodeQL, dependency updates, static analysis and coverage reporting on every change.</li>
+      </ul>
+    ]]></change-notes>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="OpenVox" language="OpenVox" extensions="pp"

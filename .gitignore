@@ -1,9 +1,31 @@
-.gradle/
+# Build outputs
 build/
+out/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Gradle
+.gradle/
+.gradle-user/
+gradle/wrapper/dists/
+
+# IDE
 .idea/
 *.iml
-out/
+*.iws
+*.ipr
+.vscode/
+
+# IntelliJ Platform Gradle Plugin and Kotlin
 .intellijPlatform/
 .kotlin/
-.DS_Store
+hs_err_pid*.log
+
+# Python
 __pycache__/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
