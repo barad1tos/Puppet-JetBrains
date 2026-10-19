@@ -62,7 +62,7 @@ private class OpenVoxStructureElement(
 
             override fun getLocationString(): String? = null
 
-            override fun getIcon(unused: Boolean): Icon? = iconFor()
+            override fun getIcon(unused: Boolean): Icon = iconFor()
         }
 
     override fun getChildren(): Array<StructureViewTreeElement> {
@@ -112,7 +112,7 @@ private class OpenVoxStructureElement(
             }
         }
 
-    private fun iconFor(): Icon? = OpenVoxIcons.FILE
+    private fun iconFor(): Icon = OpenVoxIcons.FILE
 
     private companion object {
         val DEFINITIONS =
