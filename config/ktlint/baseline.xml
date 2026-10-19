@@ -18,44 +18,6 @@
         <error line="7" column="5" source="standard:blank-line-before-declaration" />
         <error line="12" column="5" source="standard:blank-line-before-declaration" />
     </file>
-    <file name="src/main/kotlin/software/barad1tos/puppet/annotator/OpenVoxExternalAnnotator.kt">
-        <error line="3" column="1" source="standard:import-ordering" />
-        <error line="24" column="34" source="standard:class-signature" />
-        <error line="24" column="50" source="standard:class-signature" />
-        <error line="27" column="5" source="standard:class-signature" />
-        <error line="28" column="1" source="standard:no-empty-first-line-in-class-body" />
-        <error line="29" column="37" source="standard:function-signature" />
-        <error line="29" column="52" source="standard:function-signature" />
-        <error line="29" column="68" source="standard:function-signature" />
-        <error line="29" column="86" source="standard:function-signature" />
-        <error line="59" column="24" source="standard:function-signature" />
-        <error line="59" column="39" source="standard:function-signature" />
-        <error line="59" column="80" source="standard:function-signature" />
-        <error line="59" column="104" source="standard:function-signature" />
-        <error line="63" column="19" source="standard:chain-method-continuation" />
-        <error line="69" column="26" source="standard:function-signature" />
-        <error line="69" column="46" source="standard:function-signature" />
-        <error line="69" column="77" source="standard:function-signature" />
-        <error line="77" column="35" source="standard:function-signature" />
-        <error line="77" column="55" source="standard:function-signature" />
-        <error line="77" column="67" source="standard:function-signature" />
-        <error line="79" column="32" source="standard:chain-method-continuation" />
-        <error line="79" column="48" source="standard:chain-method-continuation" />
-        <error line="90" column="31" source="standard:function-signature" />
-        <error line="90" column="51" source="standard:function-signature" />
-        <error line="90" column="63" source="standard:function-signature" />
-        <error line="91" column="23" source="standard:multiline-expression-wrapping" />
-        <error line="93" column="29" source="standard:argument-list-wrapping" />
-        <error line="97" column="22" source="standard:chain-method-continuation" />
-        <error line="97" column="37" source="standard:chain-method-continuation" />
-        <error line="103" column="28" source="standard:multiline-expression-wrapping" />
-        <error line="103" column="84" source="standard:if-else-wrapping" />
-        <error line="103" column="84" source="standard:multiline-if-else" />
-        <error line="104" column="22" source="standard:if-else-wrapping" />
-        <error line="104" column="22" source="standard:multiline-if-else" />
-        <error line="111" column="61" source="standard:multiline-expression-wrapping" />
-        <error line="111" column="61" source="standard:function-signature" />
-    </file>
     <file name="src/main/kotlin/software/barad1tos/puppet/completion/OpenVoxCompletionContext.kt">
         <error line="10" column="30" source="standard:class-signature" />
         <error line="10" column="54" source="standard:class-signature" />
