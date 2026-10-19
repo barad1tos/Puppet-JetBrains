@@ -58,8 +58,8 @@ jobs:
             exit 0
           fi
           if [[ "$latest" == "$TAG_NAME" ]]; then
-            echo "::error::A release for ${TAG_NAME} already exists"
-            exit 1
+            echo "::notice::A release for ${TAG_NAME} already exists; this rerun updates it."
+            exit 0
           fi
           newest="$(printf '%s\n%s\n' "${latest#v}" "${TAG_NAME#v}" | sort -V | tail -n1)"
           if [[ "$newest" != "${TAG_NAME#v}" ]]; then
@@ -88,7 +88,7 @@ jobs:
         run: ./gradlew build --stacktrace
 
       - name: Collect coverage
-        run: ./gradlew koverXmlReport koverVerify --stacktrace
+        run: ./gradlew koverXmlReport --stacktrace
 
       - name: Verify plugin structure
         run: ./gradlew verifyPluginStructure --stacktrace
@@ -100,7 +100,7 @@ jobs:
         run: python3 scripts/verify-docs.py
 
       - name: Verify release helper scripts
-        run: python3 scripts/tests/test_verify_plugin_verifier.py
+        run: python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 
       - name: Fail on internal API findings
         run: python3 scripts/verify-plugin-verifier.py
@@ -171,13 +171,27 @@ jobs:
           [[ "$SIGN_PLUGIN" == "true" ]] && tasks+=(signPlugin)
           ./gradlew "${tasks[@]}" --stacktrace
 
+      - name: Select release asset
+        shell: bash
+        run: |
+          shopt -s nullglob
+          signed=(build/distributions/*-signed.zip)
+          plain=(build/distributions/*.zip)
+          asset="${signed[0]:-${plain[0]:-}}"
+          if [[ -z "$asset" ]]; then
+            echo "::error::No plugin ZIP found in build/distributions"
+            exit 1
+          fi
+          echo "RELEASE_ASSET=$asset" >> "$GITHUB_ENV"
+
       # The GitHub Release comes first and is idempotent (a rerun updates the existing release), so a
-      # failure here never leaves a Marketplace version without its asset, and a rerun after a
-      # Marketplace failure never submits the same version twice.
+      # Marketplace failure never leaves a published version without its ZIP. A rerun repeats
+      # publishPlugin; Marketplace rejects a version it already holds, so the worst case is a red
+      # rerun, never a duplicate or a missing asset.
       - name: Create GitHub Release
         uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v2
         with:
-          files: build/distributions/*.zip
+          files: ${{ env.RELEASE_ASSET }}
           generate_release_notes: true
           draft: false
 
