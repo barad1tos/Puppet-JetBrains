@@ -60,7 +60,8 @@ jobs:
 
       - name: Compile Kotlin for CodeQL tracing
         if: matrix.language == 'java-kotlin'
-        run: ./gradlew compileKotlin compileTestKotlin --no-daemon
+        # CodeQL only sees code the compiler runs on; a task restored from the build cache leaves it nothing to trace.
+        run: ./gradlew compileKotlin compileTestKotlin --no-daemon --no-build-cache
 
       - name: Analyze
         uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
