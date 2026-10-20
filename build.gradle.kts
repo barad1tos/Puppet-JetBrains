@@ -1,13 +1,11 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.grammarkit.tasks.GenerateLexerTask
-import org.jetbrains.grammarkit.tasks.GenerateParserTask
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.extensions.intellijPlatform
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.intellij.platform")
-    alias(libs.plugins.grammarkit)
+    id("org.jetbrains.intellij.platform.grammarkit")
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kover)
@@ -120,43 +118,25 @@ intellijPlatform {
     }
 }
 
-val generatedSrc = layout.buildDirectory.dir("generated/sources/grammar")
-
-val generateOpenVoxParser by tasks.registering(GenerateParserTask::class) {
-    description = "Generates the OpenVox parser and PSI classes from the BNF grammar."
+tasks.generateParser {
     sourceFile = file("src/main/grammar/OpenVox.bnf")
-    targetRootOutputDir = generatedSrc.map { it.asFile }
-    pathToParser = "software/barad1tos/puppet/parser/OpenVoxParser.java"
-    pathToPsiRoot = "software/barad1tos/puppet/psi"
-    purgeOldFiles = true
 }
 
-val generateOpenVoxLexer by tasks.registering(GenerateLexerTask::class) {
-    description = "Generates the OpenVox lexer from the JFlex grammar."
+tasks.generateLexer {
     sourceFile = file("src/main/grammar/OpenVox.flex")
-    targetOutputDir = generatedSrc.map { it.dir("software/barad1tos/puppet/lexer").asFile }
     skeleton = file("src/main/grammar/idea-flex.skeleton")
-    purgeOldFiles = true
-    dependsOn(generateOpenVoxParser)
 }
 
-sourceSets["main"].java.srcDir(generatedSrc)
+// Each task owns its output directory; registering the tasks as source directories makes every consumer of the
+// main source set (compilers, ktlint, kover) depend on generation without explicit dependsOn.
+sourceSets["main"].java {
+    srcDir(tasks.generateParser)
+    srcDir(tasks.generateLexer)
+}
 
 tasks {
     named("build") {
         dependsOn("buildPlugin")
-    }
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        dependsOn(generateOpenVoxLexer, generateOpenVoxParser)
-    }
-    withType<JavaCompile> {
-        dependsOn(generateOpenVoxLexer, generateOpenVoxParser)
-    }
-    // ktlint scans every source directory of the main source set, which includes the generated grammar
-    // output. Without this Gradle fails validation: "Task ':runKtlintCheckOverMainSourceSet' uses this output
-    // of task ':generateOpenVoxParser' without declaring an explicit or implicit dependency".
-    withType<org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask> {
-        dependsOn(generateOpenVoxLexer, generateOpenVoxParser)
     }
 }
 

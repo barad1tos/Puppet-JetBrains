@@ -38,7 +38,7 @@ By participating, you agree to follow the [Code of Conduct](.github/CODE_OF_COND
 
 ## Generated Code
 
-The lexer and parser are generated into `build/generated/sources/grammar` during the build; nothing generated is committed. Change `OpenVox.bnf` or `OpenVox.flex` and rebuild. Grammar changes are high-impact because they affect PSI, completion, references, inspections and formatting, so include parser fixtures or regression tests for every grammar behaviour change.
+The parser and lexer are generated into `build/generated/sources/grammarkit-parser` and `build/generated/sources/grammarkit-lexer` during the build; nothing generated is committed. Change `OpenVox.bnf` or `OpenVox.flex` and rebuild. Grammar changes are high-impact because they affect PSI, completion, references, inspections and formatting, so include parser fixtures or regression tests for every grammar behaviour change.
 
 The TSV language data is regenerated, not edited by hand, except for `facts.tsv`, which is curated:
 
