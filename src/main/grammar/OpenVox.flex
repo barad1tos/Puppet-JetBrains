@@ -179,7 +179,7 @@ REGEX_R        = "/" ( [^/\\\r\n] | \\ [^\r\n] )* "/"
 
 <DQ> {
   "\""                      { yybegin(YYINITIAL); return tok(DQ_END); }
-  \\ .                      { return DQ_ESCAPE; }
+  \\ ( . | {NEWLINE} )      { return DQ_ESCAPE; }
   "${"                      { interpolationDepth.push(0); interpolationReturnState.push(DQ);
                               yybegin(YYINITIAL); return tok(INTERP_START); }
   {VARIABLE_R}              { return tok(VARIABLE); }

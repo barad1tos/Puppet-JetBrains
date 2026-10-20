@@ -8,7 +8,6 @@ import software.barad1tos.puppet.lexer.OpenVoxLexerAdapter
 import software.barad1tos.puppet.psi.OpenVoxTypes as T
 
 class HighlighterAndLexerTest : UsefulTestCase() {
-
     fun testSkippedTokensAreNotPaintedAsComments() {
         val h = OpenVoxSyntaxHighlighter()
         assertEquals(OpenVoxColors.STRING, h.getTokenHighlights(T.HD_TEXT).single())
@@ -30,6 +29,22 @@ class HighlighterAndLexerTest : UsefulTestCase() {
         assertTrue(types.contains(T.NUMBER))
     }
 
+    fun testBackslashBeforeLineBreakInDoubleQuotedStringIsAnEscape() {
+        for (lineBreak in listOf("\n", "\r\n", "\r")) {
+            val lexer = OpenVoxLexerAdapter()
+            lexer.start("\$x = \"a \\${lineBreak}b\"")
+            val tokens =
+                generateSequence {
+                    lexer.tokenType?.let { type -> (type to lexer.tokenText).also { lexer.advance() } }
+                }.toList()
+            assertTrue(
+                "backslash before ${lineBreak.length}-char line break: $tokens",
+                tokens.contains(T.DQ_ESCAPE to "\\$lineBreak"),
+            )
+            assertEquals(T.DQ_END, tokens.last().first)
+        }
+    }
+
     fun testEppLexerRestartsInsideATag() {
         val text = "hello <%= \$name %> bye"
         val full = EppLexerAdapter()
@@ -48,8 +63,11 @@ class HighlighterAndLexerTest : UsefulTestCase() {
 
         val restarted = EppLexerAdapter()
         restarted.start(text, offsetInsideTag, text.length, stateInsideTag)
-        assertEquals("restart inside a tag must not fall back to template text",
-            T.VARIABLE, restarted.tokenType)
+        assertEquals(
+            "restart inside a tag must not fall back to template text",
+            T.VARIABLE,
+            restarted.tokenType,
+        )
     }
 
     fun testEppLexerStartsInTemplateText() {
