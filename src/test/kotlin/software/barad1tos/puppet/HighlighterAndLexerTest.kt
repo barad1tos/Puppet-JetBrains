@@ -19,10 +19,10 @@ class HighlighterAndLexerTest : UsefulTestCase() {
 
     fun testLexerStateDoesNotLeakBetweenRuns() {
         val lexer = OpenVoxLexerAdapter()
-        lexer.start("\$x = @(EOT)\nstill inside the body\n")
+        lexer.start($$"$x = @(EOT)\nstill inside the body\n")
         while (lexer.tokenType != null) lexer.advance()
 
-        lexer.start("\$y = 1\n\$z = 2\n")
+        lexer.start($$"$y = 1\n$z = 2\n")
         val types = generateSequence { lexer.tokenType?.also { lexer.advance() } }.toList()
         assertFalse("heredoc state leaked into the next file", types.contains(T.HD_TEXT))
         assertTrue(types.contains(T.VARIABLE))
@@ -32,7 +32,7 @@ class HighlighterAndLexerTest : UsefulTestCase() {
     fun testBackslashBeforeLineBreakInDoubleQuotedStringIsAnEscape() {
         for (lineBreak in listOf("\n", "\r\n", "\r")) {
             val lexer = OpenVoxLexerAdapter()
-            lexer.start("\$x = \"a \\${lineBreak}b\"")
+            lexer.start($$"$x = \"a \\$${lineBreak}b\"")
             val tokens =
                 generateSequence {
                     lexer.tokenType?.let { type -> (type to lexer.tokenText).also { lexer.advance() } }
@@ -46,7 +46,7 @@ class HighlighterAndLexerTest : UsefulTestCase() {
     }
 
     fun testEppLexerRestartsInsideATag() {
-        val text = "hello <%= \$name %> bye"
+        val text = $$"hello <%= $name %> bye"
         val full = EppLexerAdapter()
         full.start(text)
         var stateInsideTag = -1
